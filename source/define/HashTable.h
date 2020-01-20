@@ -1,11 +1,8 @@
 #ifndef _HASHTABLE_DEFINE_
 #define _HASHTABLE_DEFINE_
 
-#include "Hash.h"
-#include "String.h"
 #include "Word.h"
-#include <stdbool.h>
-#include <stdlib.h>
+#include "Hash.h"
 
 //--------------------------------------------------
 
@@ -18,95 +15,129 @@ typedef Word ElementType;
 // Node struct
 struct NodeStruct
 {
+  // Element
   ElementType data;
+
+  // Next Node
   struct NodeStruct *next;
 };
 
 // Node
 typedef struct NodeStruct Node;
 
+//Bucket
+typedef Node *Bucket;
+
 // Hash Table
-typedef Node *HashTable[LENGTH_HASHTABLE];
+typedef Bucket *HashTable;
 
 //--------------------------------------------------
 
 // Create Hash Table
-void HashTable_create(HashTable *hashTable)
+HashTable HashTable_create()
 {
+  HashTable hashTable = (HashTable)malloc(sizeof(Bucket) * LENGTH_HASHTABLE);
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
-    (*hashTable)[index] = NULL;
+    hashTable[index] = NULL;
     index++;
   }
+  return hashTable;
+}
+
+// Destroy Bucket
+void Bucket_destroy(Bucket bucket)
+{
+  Word_destroy(bucket->data);
+  free(bucket);
 }
 
 // Destroy Hash Table
-void HashTable_destroy(HashTable *hashTable)
+void HashTable_destroy(HashTable hashTable)
 {
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
-    while ((*hashTable)[index] != NULL)
+    while (hashTable[index] != NULL)
     {
-      Node *nextPosition = ((*hashTable)[index])->next;
-      free((*hashTable)[index]);
-      (*hashTable)[index] = nextPosition;
+      Bucket bucket = hashTable[index]->next;
+      Bucket_destroy(hashTable[index]);
+      hashTable[index] = bucket;
     }
     index++;
   }
+
+  free(hashTable);
 }
+
+//--------------------------------------------------
 
 // Get Key from Element
-String HashTable_key(ElementType element)
+String Element_getKey(const ElementType element)
 {
-  return element.english;
+  return Word_getEnglsh(element);
 }
 
-// Check Element has existed or not
-bool HashTable_isContain(HashTable hashTable, ElementType element)
+// Get Bucket by Key
+Bucket HashTable_getBucket(const HashTable hashTable, const String key)
 {
-  Node *position = hashTable[Hash_execute(HashTable_key(element), LENGTH_HASHTABLE)];
-  while (position != NULL)
+  Bucket bucket = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
+  while (bucket != NULL)
   {
-    if (Word_isEqual(element, position->data))
+    if (String_isEqualIgnoreCase(key, Element_getKey(bucket->data)))
     {
-      return true;
+      return bucket;
     }
     else
     {
-      position = position->next;
+      bucket = bucket->next;
     }
   }
-  return false;
-}
-
-// Get Node by Key
-Node *HashTable_get(HashTable hashTable, String key)
-{
-  Node *position = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
-  while (position != NULL)
-  {
-    if (String_isEqual(key, HashTable_key(position->data)))
-    {
-      return position;
-    }
-    else
-    {
-      position = position->next;
-    }
-  }
-  return position;
+  return bucket;
 }
 
 // Insert Element
-void HashTable_insert(HashTable *hashTable, ElementType element)
+void HashTable_insert(HashTable hashTable, const ElementType element)
 {
-  size_t index = Hash_execute(HashTable_key(element), LENGTH_HASHTABLE);
-  Node *currentPosition = (*hashTable)[index];
-  (*hashTable)[index] = (Node *)malloc(sizeof(Node));
-  ((*hashTable)[index])->data = element;
-  ((*hashTable)[index])->next = currentPosition;
+  size_t index = Hash_execute(Element_getKey(element), LENGTH_HASHTABLE);
+  Bucket currentBucket = hashTable[index];
+  hashTable[index] = (Bucket)malloc(sizeof(Node));
+  hashTable[index]->data = element;
+  hashTable[index]->next = currentBucket;
+}
+
+// Delete Element
+void HashTable_delete(HashTable hashTable, const String key)
+{
+  size_t index = Hash_execute(key, LENGTH_HASHTABLE);
+  if (hashTable[index] != NULL)
+  {
+    Bucket currentBucket = hashTable[index];
+    if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->data)))
+    {
+      hashTable[index] = hashTable[index]->next;
+      Bucket_destroy(currentBucket);
+    }
+    else
+    {
+      bool deleted = false;
+      while (currentBucket->next != NULL && !deleted)
+      {
+        if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->next->data)))
+        {
+          Bucket nextBucket = currentBucket->next;
+          currentBucket->next = nextBucket->next;
+          Bucket_destroy(nextBucket);
+          deleted = true;
+        }
+        else
+        {
+          currentBucket = currentBucket->next;
+        }
+      }
+    }
+  }
 }
 
 #endif

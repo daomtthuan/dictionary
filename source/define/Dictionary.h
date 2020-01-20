@@ -1,10 +1,8 @@
 #ifndef _DICTIONARY_DEFINE_
 #define _DICTIONARY_DEFINE_
 
+#include "Console.h"
 #include "HashTable.h"
-#include "String.h"
-#include "Word.h"
-#include <stdlib.h>
 
 //--------------------------------------------------
 
@@ -14,34 +12,56 @@ typedef HashTable Dictionary;
 //--------------------------------------------------
 
 // Create Dictionary
-void Dictionary_create(Dictionary *dictionary)
+Dictionary Dictionary_create()
 {
-  HashTable_create(dictionary);
+  return HashTable_create();
 }
 
 // Destroy Dictionary
-void Dictionary_destroy(Dictionary *dictionary)
+void Dictionary_destroy(Dictionary dictionary)
 {
   HashTable_destroy(dictionary);
 }
 
 // Insert Word
-void Dictionary_insert(Dictionary *dictionary, Word word)
+void Dictionary_insert(Dictionary dictionary, const String english, const String pronunciation, const String vietnamese)
 {
-  HashTable_insert(dictionary, word);
-}
-
-// Get Vietnamese from English Word
-String Dictionary_get(Dictionary dictionary, String english)
-{
-  Node *node = HashTable_get(dictionary, english);
-  if (node == NULL)
+  if (HashTable_getBucket(dictionary, english) == NULL)
   {
-    return "\0";
+    HashTable_insert(dictionary, Word_create(english, pronunciation, vietnamese));
+    Console_message("Insert word successful.");
   }
   else
   {
-    return node->data.vietnamese;
+    Console_message("Insert word failed. This word already exists.");
+  }
+}
+
+// Delete Word
+void Dictionary_delete(Dictionary dictionary, const String english)
+{
+  if (HashTable_getBucket(dictionary, english) == NULL)
+  {
+    Console_message("Delete word failed. Word not found.");
+  }
+  else
+  {
+    HashTable_delete(dictionary, english);
+    Console_message("Delete word successful.");
+  }
+}
+
+// Search Word
+void Dictionary_search(Dictionary dictionary, const String english)
+{
+  Bucket bucket = HashTable_getBucket(dictionary, english);
+  if (bucket == NULL)
+  {
+    Console_message("Word not found.");
+  }
+  else
+  {
+    Console_result(bucket->data);
   }
 }
 

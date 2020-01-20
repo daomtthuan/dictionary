@@ -11,7 +11,7 @@
 //--------------------------------------------------
 
 // Hash key by "Separate" solution
-size_t Hash_separate(size_t code, size_t length)
+size_t Hash_separate(size_t code, const size_t length)
 {
   size_t result = 0;
   while (code > 0)
@@ -23,7 +23,7 @@ size_t Hash_separate(size_t code, size_t length)
 }
 
 // Hash key
-size_t Hash_execute(String key, size_t length)
+size_t Hash_execute(const String key, const size_t length)
 {
   size_t index = 0, code = 0;
   // Convert key (string) to number - summ ascii code number

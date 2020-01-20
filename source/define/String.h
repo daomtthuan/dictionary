@@ -1,9 +1,7 @@
 #ifndef _STRING_DEFINE_
 #define _STRING_DEFINE_
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <string.h>
+#include "Include.h"
 
 //--------------------------------------------------
 
@@ -12,7 +10,7 @@ typedef char *String;
 
 //--------------------------------------------------
 
-bool String_isEqual(String string1, String string2)
+bool String_isEqualIgnoreCase(const String string1, const String string2)
 {
   if (strlen(string1) == strlen(string2))
   {

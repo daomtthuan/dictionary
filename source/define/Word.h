@@ -2,43 +2,82 @@
 #define _WORD_DEFINE_
 
 #include "String.h"
-#include <stdbool.h>
-#include <stdlib.h>
 
 //--------------------------------------------------
 
 // Word struct
 struct WordStruct
 {
+  // English Word
   String english;
+
+  // Pronunciation of English Word
+  String pronunciation;
+
+  // Vietnamese mean of Word
   String vietnamese;
 };
 
 // Word
-typedef struct WordStruct Word;
+typedef struct WordStruct *Word;
 
 //--------------------------------------------------
 
 // Create Word
-void Word_create(Word *word, String english, String vietnamese)
+Word Word_create(const String english, const String pronunciation, const String vietnamese)
 {
+  Word word = (Word)malloc(sizeof(struct WordStruct));
   word->english = (String)malloc(sizeof(english));
+  word->pronunciation = (String)malloc(sizeof(pronunciation));
   word->vietnamese = (String)malloc(sizeof(vietnamese));
+
   strcpy(word->english, english);
+  strcpy(word->pronunciation, pronunciation);
   strcpy(word->vietnamese, vietnamese);
+
+  return word;
 }
 
 // Destroy Word
-void Word_destroy(Word *word)
+void Word_destroy(Word word)
 {
   free(word->english);
   free(word->vietnamese);
+  free(word);
 }
 
-// Check equal
-bool Word_isEqual(Word word1, Word word2)
+//--------------------------------------------------
+
+// Get English
+String Word_getEnglsh(Word word)
 {
-  return String_isEqual(word1.english, word2.english);
+  return word->english;
+}
+
+// Get Pronunciation
+String Word_getPronunciation(Word word)
+{
+  return word->pronunciation;
+}
+
+// Get Vietnamese
+String Word_getVietnamese(Word word)
+{
+  return word->vietnamese;
+}
+
+// Set Pronunciation
+void Word_setPronunciation(Word word, const String pronunciation)
+{
+  word->pronunciation = (String)realloc(word->pronunciation, sizeof(pronunciation));
+  strcpy(word->pronunciation, pronunciation);
+}
+
+// Set Vietnamese
+void Word_setVietnamese(Word word, const String vietnamese)
+{
+  word->vietnamese = (String)realloc(word->vietnamese, sizeof(vietnamese));
+  strcpy(word->vietnamese, vietnamese);
 }
 
 #endif
