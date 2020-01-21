@@ -57,11 +57,11 @@ void Dictionary_search(Dictionary dictionary, const String english)
   Bucket bucket = HashTable_getBucket(dictionary, english);
   if (bucket == NULL)
   {
-    Console_message("Word not found.");
+    Console_message("Search word failed. Word not found.");
   }
   else
   {
-    Console_result(bucket->data);
+    Console_searchResult(bucket->data);
   }
 }
 

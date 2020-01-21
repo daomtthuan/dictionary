@@ -7,6 +7,7 @@ int main()
   Dictionary_insert(dictionary, "nglish", "", "Tieng anh 2");
 
   Dictionary_search(dictionary, "English");
+  Dictionary_search(dictionary, "sad");
   Dictionary_search(dictionary, "nglish");
 
   Dictionary_destroy(dictionary);

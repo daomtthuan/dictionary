@@ -10,13 +10,13 @@
 #define LENGTH_HASHTABLE 100
 
 // Element type
-typedef Word ElementType;
+typedef Word Element;
 
 // Node struct
 struct NodeStruct
 {
   // Element
-  ElementType data;
+  Element data;
 
   // Next Node
   struct NodeStruct *next;
@@ -74,7 +74,7 @@ void HashTable_destroy(HashTable hashTable)
 //--------------------------------------------------
 
 // Get Key from Element
-String Element_getKey(const ElementType element)
+String Element_getKey(const Element element)
 {
   return Word_getEnglsh(element);
 }
@@ -98,7 +98,7 @@ Bucket HashTable_getBucket(const HashTable hashTable, const String key)
 }
 
 // Insert Element
-void HashTable_insert(HashTable hashTable, const ElementType element)
+void HashTable_insert(HashTable hashTable, const Element element)
 {
   size_t index = Hash_execute(Element_getKey(element), LENGTH_HASHTABLE);
   Bucket currentBucket = hashTable[index];
