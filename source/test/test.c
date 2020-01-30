@@ -1,4 +1,4 @@
-#include "../define/Dictionary.h"
+#include "../includes/Dictionary.h"
 
 int main()
 {
@@ -11,5 +11,6 @@ int main()
   Dictionary_search(dictionary, "nglish");
 
   Dictionary_destroy(dictionary);
+  getchar();
   return 0;
 }

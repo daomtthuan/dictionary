@@ -1,7 +1,10 @@
-#ifndef _STRING_DEFINE_
-#define _STRING_DEFINE_
+#ifndef _STRING_INCLUDE_
+#define _STRING_INCLUDE_
 
-#include "Include.h"
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 //--------------------------------------------------
 

@@ -1,7 +1,7 @@
-#ifndef _HASH_DEFINE_
-#define _HASH_DEFINE_
+#ifndef _HASH_INCLUDE_
+#define _HASH_INCLUDE_
 
-#include "String.h"
+#include "string.h"
 
 //--------------------------------------------------
 

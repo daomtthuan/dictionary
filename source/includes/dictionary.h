@@ -1,8 +1,8 @@
-#ifndef _DICTIONARY_DEFINE_
-#define _DICTIONARY_DEFINE_
+#ifndef _DICTIONARY_INCLUDE_
+#define _DICTIONARY_INCLUDE_
 
-#include "Console.h"
-#include "HashTable.h"
+#include "console.h"
+#include "hashtable.h"
 
 //--------------------------------------------------
 

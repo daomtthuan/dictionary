@@ -1,7 +1,8 @@
-#ifndef _CONSOLE_DEFINE_
-#define _CONSOLE_DEFINE_
+#ifndef _CONSOLE_INCLUDE_
+#define _CONSOLE_INCLUDE_
 
-#include "Word.h"
+#include <stdio.h>
+#include "word.h"
 
 //--------------------------------------------------
 

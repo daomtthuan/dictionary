@@ -1,8 +1,8 @@
-#ifndef _HASHTABLE_DEFINE_
-#define _HASHTABLE_DEFINE_
+#ifndef _HASHTABLE_INCLUDE_
+#define _HASHTABLE_INCLUDE_
 
-#include "Word.h"
-#include "Hash.h"
+#include "word.h"
+#include "hash.h"
 
 //--------------------------------------------------
 

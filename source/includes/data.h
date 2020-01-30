@@ -1,7 +1,8 @@
-#ifndef _DATA_DEFINE_
-#define _DATA_DEFINE_
+#ifndef _DATA_INCLUDE_
+#define _DATA_INCLUDE_
 
-#include "Word.h"
+#include <stdio.h>
+#include "word.h"
 
 //--------------------------------------------------
 

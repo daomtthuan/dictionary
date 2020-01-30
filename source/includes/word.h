@@ -1,7 +1,7 @@
-#ifndef _WORD_DEFINE_
-#define _WORD_DEFINE_
+#ifndef _WORD_INCLUDE_
+#define _WORD_INCLUDE_
 
-#include "String.h"
+#include "string.h"
 
 //--------------------------------------------------
 
