@@ -8,11 +8,18 @@
 
 //--------------------------------------------------
 
-// String
+// String type
 typedef char *String;
 
 //--------------------------------------------------
-
+/**
+ * Compare two strings are equal without case of string
+ *
+ * @param string1 - First string
+ * @param string2 - Second string
+ *
+ * @return - Bool result true or false
+ */
 bool String_isEqualIgnoreCase(const String string1, const String string2)
 {
   if (strlen(string1) == strlen(string2))

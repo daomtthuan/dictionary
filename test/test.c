@@ -1,4 +1,4 @@
-#include "../includes/Dictionary.h"
+#include "../source/includes/types/dictionary.h"
 
 int main()
 {
@@ -8,7 +8,7 @@ int main()
 
   Dictionary_search(dictionary, "English");
   Dictionary_search(dictionary, "sad");
-  Dictionary_search(dictionary, "nglish");
+  Dictionary_search(dictionary, "NgLish");
 
   Dictionary_destroy(dictionary);
   getchar();

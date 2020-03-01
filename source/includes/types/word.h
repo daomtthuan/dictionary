@@ -1,7 +1,7 @@
-#ifndef _WORD_INCLUDE_
-#define _WORD_INCLUDE_
+#ifndef _WORD_TYPE_INCLUDE_
+#define _WORD_TYPE_INCLUDE_
 
-#include "string.h"
+#include "./string.h"
 
 //--------------------------------------------------
 
@@ -11,34 +11,41 @@ struct WordStruct
   // English Word
   String english;
 
-  // Pronunciation of English Word
-  String pronunciation;
-
   // Vietnamese mean of Word
   String vietnamese;
 };
 
-// Word
+// Word type
 typedef struct WordStruct *Word;
 
 //--------------------------------------------------
 
-// Create Word
+/**
+ * Create Word
+ *
+ * @param english - English Word
+ * @param pronunciation - Pronunciation of Word in english
+ * @param vietnamese - Vietnamese meaning
+ *
+ * @return - New Word
+ */
 Word Word_create(const String english, const String pronunciation, const String vietnamese)
 {
   Word word = (Word)malloc(sizeof(struct WordStruct));
   word->english = (String)malloc(sizeof(english));
-  word->pronunciation = (String)malloc(sizeof(pronunciation));
   word->vietnamese = (String)malloc(sizeof(vietnamese));
 
   strcpy(word->english, english);
-  strcpy(word->pronunciation, pronunciation);
   strcpy(word->vietnamese, vietnamese);
 
   return word;
 }
 
-// Destroy Word
+/**
+ * Destroy Word
+ *
+ * @param word - Destroyed Word
+ */
 void Word_destroy(Word word)
 {
   free(word->english);
@@ -48,36 +55,51 @@ void Word_destroy(Word word)
 
 //--------------------------------------------------
 
-// Get English
+/**
+ * Get english meaning of Word
+ *
+ * @param word - Getted Word
+ *
+ * @return - English meaning of Word
+ */
 String Word_getEnglsh(Word word)
 {
   return word->english;
 }
 
-// Get Pronunciation
-String Word_getPronunciation(Word word)
-{
-  return word->pronunciation;
-}
-
-// Get Vietnamese
+/**
+ * Get vietnamese meaning of Word
+ *
+ * @param word - Getted Word
+ *
+ * @return - Vietnamese meaning of Word
+ */
 String Word_getVietnamese(Word word)
 {
   return word->vietnamese;
 }
 
-// Set Pronunciation
-void Word_setPronunciation(Word word, const String pronunciation)
-{
-  word->pronunciation = (String)realloc(word->pronunciation, sizeof(pronunciation));
-  strcpy(word->pronunciation, pronunciation);
-}
-
-// Set Vietnamese
+/**
+ * Set Vietnamese meaning of Word
+ *
+ * @param word - Setted Word
+ */
 void Word_setVietnamese(Word word, const String vietnamese)
 {
   word->vietnamese = (String)realloc(word->vietnamese, sizeof(vietnamese));
   strcpy(word->vietnamese, vietnamese);
+}
+
+/**
+ * Get Key from Word
+ *
+ * @param word - Getted Word
+ *
+ * @return Key of Word
+ */
+String Word_getKey(const Word word)
+{
+  return Word_getEnglsh(word);
 }
 
 #endif

@@ -4,7 +4,7 @@
   "description": "En-Vi Dictionary",
   "main": "./source/main.c",
   "scripts": {
-    "test": "gcc ./source/test/test.c -o ./source/test/build/test.exe && start ./source/test/build/test.exe",
+    "test": "gcc ./test/test.c -o ./test/build/test.exe && start ./test/build/test.exe",
     "build": "gcc ./source/main.c -o ./build/dictionary.exe"
   },
   "repository": {

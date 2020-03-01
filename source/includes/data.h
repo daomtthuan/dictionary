@@ -2,7 +2,7 @@
 #define _DATA_INCLUDE_
 
 #include <stdio.h>
-#include "word.h"
+#include "./word.h"
 
 //--------------------------------------------------
 

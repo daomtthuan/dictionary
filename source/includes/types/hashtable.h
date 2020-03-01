@@ -1,39 +1,23 @@
-#ifndef _HASHTABLE_INCLUDE_
-#define _HASHTABLE_INCLUDE_
+#ifndef _HASHTABLE_TYPE_INCLUDE_
+#define _HASHTABLE_TYPE_INCLUDE_
 
-#include "word.h"
-#include "hash.h"
+#include "./hash.h"
 
 //--------------------------------------------------
 
 // Length of Hash Table
 #define LENGTH_HASHTABLE 100
 
-// Element type
-typedef Word Element;
-
-// Node struct
-struct NodeStruct
-{
-  // Element
-  Element data;
-
-  // Next Node
-  struct NodeStruct *next;
-};
-
-// Node
-typedef struct NodeStruct Node;
-
-//Bucket
-typedef Node *Bucket;
-
-// Hash Table
+// HashTable type
 typedef Bucket *HashTable;
 
 //--------------------------------------------------
 
-// Create Hash Table
+/**
+ * Create HashTable
+ *
+ * @return - New HashTable with null Buckets
+ */
 HashTable HashTable_create()
 {
   HashTable hashTable = (HashTable)malloc(sizeof(Bucket) * LENGTH_HASHTABLE);
@@ -46,14 +30,11 @@ HashTable HashTable_create()
   return hashTable;
 }
 
-// Destroy Bucket
-void Bucket_destroy(Bucket bucket)
-{
-  Word_destroy(bucket->data);
-  free(bucket);
-}
-
-// Destroy Hash Table
+/**
+ * Destroy HashTable
+ *
+ * @param hashTable - Destroyed HastaTable
+ */
 void HashTable_destroy(HashTable hashTable)
 {
   size_t index = 0;
@@ -73,13 +54,14 @@ void HashTable_destroy(HashTable hashTable)
 
 //--------------------------------------------------
 
-// Get Key from Element
-String Element_getKey(const Element element)
-{
-  return Word_getEnglsh(element);
-}
-
-// Get Bucket by Key
+/**
+ * Get Bucket by Key
+ *
+ * @param hashTable - Getted HashTable
+ * @param key - Compared key
+ *
+ * @return Bucket in HashTable
+ */
 Bucket HashTable_getBucket(const HashTable hashTable, const String key)
 {
   Bucket bucket = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
@@ -94,21 +76,29 @@ Bucket HashTable_getBucket(const HashTable hashTable, const String key)
       bucket = bucket->next;
     }
   }
-  return bucket;
+  return NULL;
 }
 
-// Insert Element
-void HashTable_insert(HashTable hashTable, const Element element)
+/**
+ * Insert Element
+ *
+ * @param hashTable - HashTable
+ * @param element - Inserted Element
+ */
+void HashTable_insertElement(HashTable hashTable, const Element element)
 {
   size_t index = Hash_execute(Element_getKey(element), LENGTH_HASHTABLE);
   Bucket currentBucket = hashTable[index];
-  hashTable[index] = (Bucket)malloc(sizeof(Node));
-  hashTable[index]->data = element;
-  hashTable[index]->next = currentBucket;
+  hashTable[index] = Bucket_create(element, currentBucket);
 }
 
-// Delete Element
-void HashTable_delete(HashTable hashTable, const String key)
+/**
+ * Delete Element by key
+ *
+ * @param hashTable - HashTable
+ * @param key - Key of deleted Element
+ */
+void HashTable_deleteElement(HashTable hashTable, const String key)
 {
   size_t index = Hash_execute(key, LENGTH_HASHTABLE);
   if (hashTable[index] != NULL)
