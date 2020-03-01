@@ -2,6 +2,7 @@
 #define _CONSOLE_UI_INCLUDE_
 
 #include <stdio.h>
+#include "../types/word.h"
 
 //--------------------------------------------------
 
