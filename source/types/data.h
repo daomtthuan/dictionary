@@ -1,5 +1,5 @@
-#ifndef _DATA_SYSTEM_INCLUDE_
-#define _DATA_SYSTEM_INCLUDE_
+#ifndef _DATA_INCLUDE_
+#define _DATA_INCLUDE_
 
 #include "./dictionary.h"
 
@@ -12,7 +12,7 @@
 #define VIETNAMESE_FILE "../data/Vietnamese.txt"
 
 // DataSystem struct
-struct DataSystemtruct
+struct Datatruct
 {
   // English meaning file
   FILE *english;
@@ -22,35 +22,35 @@ struct DataSystemtruct
 };
 
 // DataSystem type
-typedef struct DataSystemtruct *DataSystem;
+typedef struct Datatruct *Data;
 
 //--------------------------------------------------
 
 /**
- * Create DataSystem
+ * Create Data
  *
- * @return - new DataSystem
+ * @return - new Data
  */
-DataSystem DataSystem_create()
+Data Data_create()
 {
-  DataSystem dataSystem = (DataSystem)malloc(sizeof(struct DataSystemtruct));
+  Data dataSystem = (Data)malloc(sizeof(struct Datatruct));
   dataSystem->english = fopen(ENGLISH_FILE, "w+");
   dataSystem->vietnamese = fopen(VIETNAMESE_FILE, "w+");
   return dataSystem;
 }
 
 /**
- * Destroy DataSystem
+ * Destroy Data
  *
- * @param dataSystem - Destroyed DataSystem
+ * @param dataSystem - Destroyed Data
  */
-void DataSystem_destroy(DataSystem dataSystem)
+void Data_destroy(Data data)
 {
-  fclose(dataSystem->english);
-  fclose(dataSystem->vietnamese);
-  free(dataSystem->english);
-  free(dataSystem->vietnamese);
-  free(dataSystem);
+  fclose(data->english);
+  fclose(data->vietnamese);
+  free(data->english);
+  free(data->vietnamese);
+  free(data);
 }
 
 // /**

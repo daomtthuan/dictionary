@@ -1,6 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "../source/types/data.h"
 
 void main()
 {
+  Data data = Data_create();
+
+  Data_destroy(data);
 }
