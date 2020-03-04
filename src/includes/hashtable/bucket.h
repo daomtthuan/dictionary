@@ -34,7 +34,6 @@ void BucketHashtable_destroy(BucketHashtable bucket)
 {
   Word_destroy(bucket->data);
   free(bucket);
-  bucket = NULL;
 }
 
 #endif

@@ -34,7 +34,6 @@ String String_create()
 void String_destroy(String string)
 {
   free(string);
-  string = NULL;
 }
 
 //--------------------------------------------------

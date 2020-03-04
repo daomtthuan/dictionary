@@ -128,11 +128,10 @@ void Dictionary_loadData(Dictionary dictionary)
       cursor = fgetc(file);
     }
 
-    Dictionary_insert(dictionary, english, vietnamese);
+    Hashtable_insertElement(dictionary, Word_create(english, vietnamese));
     String_destroy(english);
     String_destroy(vietnamese);
   }
-
   fclose(file);
 }
 

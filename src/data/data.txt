@@ -1,156 +1,156 @@
-able
-có năng lực
-actual
-thật sự
-apple
-trái táo
-bleed
-mất máu
-blow
-thổi
-box
-cái hộp
-camera
-máy ảnh
-cheek
-gò má
-cherry
-quả anh đào
-delight
-vui thích
-destroy
-phá huỷ
-display
-phô bày
-edit
-biên tập
-erase
-xoá bỏ
-essay
-bài tiểu luận
-fame
-tiếng tăm
-fish
-con cá
-fashion
-thời trang
-giro
-chuyển khoản
-give
-cho
-greet
-chào hỏi
-hide
-trốn
-home
-nhà
-hope
-hy vọng
 ice
 băng đá
-into
-vào trong
-invert
-lộn ngược
-job
-công việc
-july
-tháng bảy
-jump
-nhảy
-kiss
-hôn
-kite
-con diều
-king
-vua
-large
-to lớn
-level
-cấp độ
-loud
-ầm ĩ
+able
+có năng lực
+fame
+tiếng tăm
+bleed
+mất máu
+hide
+trốn
+cheek
+gò má
 make
 chế tạo
-may
-tháng năm
-memory
-ký ức
-never
-không bao giờ
-note
-ghi chú
-nerve
-lo lắng
-only
-duy nhất
-orange
-màu cam
-over
-bên trên
-paw
-móng vuốt
-pen
-viết mực
-photograph
-bức ảnh
-queen
-nữ hoàng
-quiet
-yên tĩnh
-quiz
-đố vui
-rabbit
-con thỏ
-raft
-bè gỗ
-react
-phản ứng
+job
+công việc
+camera
+máy ảnh
 same
 giống nhau
-sell
-bán
-shop
-cửa hàng
-tempt
-cám dỗ
-town
-thị trấn
+pen
+viết mực
+edit
+biên tập
+vale
+thung lũng
+large
+to lớn
+king
+vua
+home
+nhà
+may
+tháng năm
+fish
+con cá
+paw
+móng vuốt
+give
+cho
+react
+phản ứng
+hope
+hy vọng
+box
+cái hộp
+raft
+bè gỗ
+kite
+con diều
+erase
+xoá bỏ
+rabbit
+con thỏ
+apple
+trái táo
+yard
+sân
 tree
 cái cây
+sell
+bán
+giro
+chuyển khoản
+void
+trống rỗng
+yes
+đồng ý
+loud
+ầm ĩ
+greet
+chào hỏi
+blow
+thổi
+actual
+thật sự
+wait
+chờ đợi
+level
+cấp độ
+zip
+khoá kéo
+orange
+màu cam
+note
+ghi chú
+warm
+ấm áp
+delight
+vui thích
+xmas
+giáng sinh
+shop
+cửa hàng
+kiss
+hôn
+into
+vào trong
 under
 phía dưới
+queen
+nữ hoàng
+zone
+khu vực
+over
+bên trên
+jump
+nhảy
+nerve
+lo lắng
+never
+không bao giờ
+fashion
+thời trang
+zero
+số không
+water
+nước
+only
+duy nhất
+essay
+bài tiểu luận
+xray
+tia x quang
+july
+tháng bảy
+xenon
+khí xenon
+quiet
+yên tĩnh
 union
 hợp nhất
 usual
 thông thường
-vale
-thung lũng
-void
-trống rỗng
+tempt
+cám dỗ
+cherry
+quả anh đào
+town
+thị trấn
+quiz
+đố vui
+display
+phô bày
 volume
 dung tích
-water
-nước
-wait
-chờ đợi
-warm
-ấm áp
-xmas
-giáng sinh
-xenon
-khí xenon
-xray
-tia x quang
-yard
-sân
+invert
+lộn ngược
+memory
+ký ức
 yellow
 màu vàng
-yes
-đồng ý
-zip
-khoá kéo
-zero
-số không
-zone
-khu vực
+destroy
+phá huỷ
+photograph
+bức ảnh

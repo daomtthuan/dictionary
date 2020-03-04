@@ -48,9 +48,7 @@ void Hashtable_destroy(Hashtable hashtable)
     }
     index++;
   }
-
   free(hashtable);
-  hashtable = NULL;
 }
 
 //--------------------------------------------------
