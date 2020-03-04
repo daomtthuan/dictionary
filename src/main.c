@@ -1,4 +1,3 @@
-#include "./includes/program/config.h"
 #include "./includes/program/dictionary.h"
 
 int main()
@@ -8,12 +7,12 @@ int main()
     Dictionary dictionary = Dictionary_create();
     char cursor;
 
-    Dictionary_loadData(dictionary, CONFIG_DATA_FILE);
+    Dictionary_loadData(dictionary);
 
-    Program_welcome();
+    Console_showWelcome();
     while (loop)
     {
-        Program_showMenu();
+        Console_showMenu();
         fflush(stdin);
         switch (getchar())
         {
@@ -25,7 +24,7 @@ int main()
         case '1':
             printf("\n Nhập từ muốn tra cứu: ");
             fflush(stdin);
-            Program_searchResult(Dictionary_search(dictionary, gets(english)));
+            Console_showSearchResult(Dictionary_search(dictionary, gets(english)));
             break;
 
         case '2':

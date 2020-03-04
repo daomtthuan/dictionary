@@ -1,8 +1,9 @@
-#ifndef _DICTIONARY_TYPE_INCLUDE_
-#define _DICTIONARY_TYPE_INCLUDE_
+#ifndef _DICTIONARY_PROGRAM_INCLUDE_
+#define _DICTIONARY_PROGRAM_INCLUDE_
 
 #include "../hashtable/hashtable.h"
 #include "./program.h"
+#include "./config.h"
 
 //--------------------------------------------------
 
@@ -34,6 +35,25 @@ void Dictionary_destroy(Dictionary dictionary)
 //--------------------------------------------------
 
 /**
+ * Write data element in data file
+ *
+ * @param element - Each element
+ * @param index - Index of each element
+ */
+void Dictionary_wirteData(ElementHashtable element, size_t index)
+{
+  FILE *file = fopen(CONFIG_DATA_FILE, index == 0 ? "w" : "a");
+  fputs(element->english, file);
+  fputc('\n', file);
+
+  fputs(element->vietnamese, file);
+  fputc('\n', file);
+
+  fclose(file);
+  file = NULL;
+}
+
+/**
  * Insert Word
  *
  * @param dictionary - Dictionary
@@ -46,13 +66,14 @@ bool Dictionary_insert(Dictionary dictionary, const String english, const String
 {
   if (Hashtable_getBucket(dictionary, english) == NULL)
   {
-    Hashtable_insertElement(dictionary, Word_create(english, vietnamese));
-    return true;
+    if (Hashtable_insertElement(dictionary, Word_create(english, vietnamese)))
+    {
+      Hashtable_forEach(dictionary, Dictionary_wirteData);
+      return true;
+    }
   }
-  else
-  {
-    return false;
-  }
+
+  return false;
 }
 
 /**
@@ -65,25 +86,26 @@ bool Dictionary_insert(Dictionary dictionary, const String english, const String
  */
 bool Dictionary_delete(Dictionary dictionary, const String english)
 {
-  if (Hashtable_getBucket(dictionary, english) == NULL)
+  if (Hashtable_getBucket(dictionary, english) != NULL)
   {
-    return false;
+    if (Hashtable_deleteElement(dictionary, english))
+    {
+      Hashtable_forEach(dictionary, Dictionary_wirteData);
+      return true;
+    }
   }
-  else
-  {
-    Hashtable_deleteElement(dictionary, english);
-    return true;
-  }
+
+  return false;
 }
 
 /**
- * Load Word
+ * Load Word from data file
  *
  * @param dictionary - Dictionary
  */
-void Dictionary_loadData(Dictionary dictionary, const String dataFile)
+void Dictionary_loadData(Dictionary dictionary)
 {
-  FILE *file = fopen(dataFile, "r+");
+  FILE *file = fopen(CONFIG_DATA_FILE, "r+");
 
   fflush(stdin);
   char cursor = fgetc(file);

@@ -1,11 +1,11 @@
-#ifndef _PROGRAM_INCLUDE_
-#define _PROGRAM_INCLUDE_
+#ifndef _CONSOLE_PROGRAM_INCLUDE_
+#define _CONSOLE_PROGRAM_INCLUDE_
 
 #include "../types/word.h"
 
 //--------------------------------------------------
 
-void Program_showMenu()
+void Console_showMenu()
 {
   printf(" Danh sách chức năng:\n");
   printf("     0. Thoát chương trình.\n");
@@ -16,7 +16,7 @@ void Program_showMenu()
   printf(" Chọn chức năng: ");
 }
 
-void Program_welcome()
+void Console_showWelcome()
 {
   printf("\n      *********************************************\n");
   printf("      *                                           *\n");
@@ -28,13 +28,13 @@ void Program_welcome()
   printf("      *********************************************\n\n");
 }
 
-void Program_searchResult(const Word word)
+void Console_showSearchResult(const Word word)
 {
   if (word != NULL)
   {
     printf("\n Tra từ thành công.\n");
-    printf("     Tiếng Anh: %s\n", Word_getEnglsh(word));
-    printf("     Tiếng Việt: %s\n\n", Word_getVietnamese(word));
+    printf("     Tiếng Anh: %s\n", word->english);
+    printf("     Tiếng Việt: %s\n\n", word->vietnamese);
   }
   else
   {

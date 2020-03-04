@@ -17,7 +17,7 @@ typedef NodeHashtable *BucketHashtable;
  *
  * @return - New Bucket
  */
-BucketHashtable Bucket_create(const ElementHashtable data, const BucketHashtable nextBucket)
+BucketHashtable BucketHashtable_create(const ElementHashtable data, const BucketHashtable nextBucket)
 {
   BucketHashtable bucket = (BucketHashtable)malloc(sizeof(NodeHashtable));
   bucket->data = data;
@@ -30,7 +30,7 @@ BucketHashtable Bucket_create(const ElementHashtable data, const BucketHashtable
  *
  * @param bucket - Destroyed Bucket
  */
-void Bucket_destroy(BucketHashtable bucket)
+void BucketHashtable_destroy(BucketHashtable bucket)
 {
   Word_destroy(bucket->data);
   free(bucket);

@@ -32,7 +32,7 @@ typedef struct NodeHashtableStruct NodeHashtable;
  */
 String ElementHashtable_getKey(const ElementHashtable element)
 {
-  return Word_getKey(element);
+  return element->english;
 }
 
 #endif

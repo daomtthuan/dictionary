@@ -20,37 +20,37 @@ typedef BucketHashtable *Hashtable;
  */
 Hashtable Hashtable_create()
 {
-  Hashtable hashTable = (Hashtable)malloc(sizeof(BucketHashtable) * LENGTH_HASHTABLE);
+  Hashtable hashtable = (Hashtable)malloc(sizeof(BucketHashtable) * LENGTH_HASHTABLE);
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
-    hashTable[index] = NULL;
+    hashtable[index] = NULL;
     index++;
   }
-  return hashTable;
+  return hashtable;
 }
 
 /**
  * Destroy Hashtable
  *
- * @param hashTable - Destroyed HastaTable
+ * @param hashtable - Destroyed HastaTable
  */
-void Hashtable_destroy(Hashtable hashTable)
+void Hashtable_destroy(Hashtable hashtable)
 {
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
-    while (hashTable[index] != NULL)
+    while (hashtable[index] != NULL)
     {
-      BucketHashtable bucket = hashTable[index]->next;
-      Bucket_destroy(hashTable[index]);
-      hashTable[index] = bucket;
+      BucketHashtable bucket = hashtable[index]->next;
+      BucketHashtable_destroy(hashtable[index]);
+      hashtable[index] = bucket;
     }
     index++;
   }
 
-  free(hashTable);
-  hashTable = NULL;
+  free(hashtable);
+  hashtable = NULL;
 }
 
 //--------------------------------------------------
@@ -58,14 +58,14 @@ void Hashtable_destroy(Hashtable hashTable)
 /**
  * Get Bucket by Key
  *
- * @param hashTable - Getted Hashtable
+ * @param hashtable - Getted Hashtable
  * @param key - Compared key
  *
  * @return Bucket in Hashtable
  */
-BucketHashtable Hashtable_getBucket(const Hashtable hashTable, const String key)
+BucketHashtable Hashtable_getBucket(const Hashtable hashtable, const String key)
 {
-  BucketHashtable bucket = hashTable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
+  BucketHashtable bucket = hashtable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
   while (bucket != NULL)
   {
     if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(bucket->data)))
@@ -83,32 +83,38 @@ BucketHashtable Hashtable_getBucket(const Hashtable hashTable, const String key)
 /**
  * Insert Element
  *
- * @param hashTable - Hashtable
+ * @param hashtable - Hashtable
  * @param element - Inserted Element
+ *
+ * @return Bool result of success or not
  */
-void Hashtable_insertElement(Hashtable hashTable, const ElementHashtable element)
+bool Hashtable_insertElement(Hashtable hashtable, const ElementHashtable element)
 {
   size_t index = HashSolution_executeString(ElementHashtable_getKey(element), LENGTH_HASHTABLE);
-  BucketHashtable currentBucket = hashTable[index];
-  hashTable[index] = Bucket_create(element, currentBucket);
+  BucketHashtable currentBucket = hashtable[index];
+  hashtable[index] = BucketHashtable_create(element, currentBucket);
+  return true;
 }
 
 /**
  * Delete Element by key
  *
- * @param hashTable - Hashtable
+ * @param hashtable - Hashtable
  * @param key - Key of deleted Element
+ *
+ * @return Bool result of success or not
  */
-void Hashtable_deleteElement(Hashtable hashTable, const String key)
+bool Hashtable_deleteElement(Hashtable hashtable, const String key)
 {
   size_t index = HashSolution_executeString(key, LENGTH_HASHTABLE);
-  if (hashTable[index] != NULL)
+  if (hashtable[index] != NULL)
   {
-    BucketHashtable currentBucket = hashTable[index];
+    BucketHashtable currentBucket = hashtable[index];
     if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(currentBucket->data)))
     {
-      hashTable[index] = hashTable[index]->next;
-      Bucket_destroy(currentBucket);
+      hashtable[index] = hashtable[index]->next;
+      BucketHashtable_destroy(currentBucket);
+      return true;
     }
     else
     {
@@ -119,7 +125,7 @@ void Hashtable_deleteElement(Hashtable hashTable, const String key)
         {
           BucketHashtable nextBucket = currentBucket->next;
           currentBucket->next = nextBucket->next;
-          Bucket_destroy(nextBucket);
+          BucketHashtable_destroy(nextBucket);
           deleted = true;
         }
         else
@@ -127,6 +133,33 @@ void Hashtable_deleteElement(Hashtable hashTable, const String key)
           currentBucket = currentBucket->next;
         }
       }
+      return deleted;
+    }
+  }
+  return false;
+}
+
+/**
+ * For each Element with do action
+ *
+ * @param hashtable - Hashtable
+ * @param action - Action do with each Element - Function with 2 args is element and index of element
+ *
+ * --- @param _element - Element in action
+ * --- @param _index - Index element in action
+ */
+void Hashtable_forEach(const Hashtable hashtable, void (*action)(ElementHashtable _element, size_t _index))
+{
+  BucketHashtable bucket;
+  size_t indexBucket = 0;
+  size_t index = 0;
+  while (indexBucket < LENGTH_HASHTABLE)
+  {
+    bucket = hashtable[indexBucket++];
+    while (bucket != NULL)
+    {
+      action(bucket->data, index++);
+      bucket = bucket->next;
     }
   }
 }

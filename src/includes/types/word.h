@@ -56,42 +56,4 @@ void Word_destroy(Word word)
   word = NULL;
 }
 
-//--------------------------------------------------
-
-/**
- * Get english meaning of Word
- *
- * @param word - Getted Word
- *
- * @return - English meaning of Word
- */
-String Word_getEnglsh(Word word)
-{
-  return word->english;
-}
-
-/**
- * Get vietnamese meaning of Word
- *
- * @param word - Getted Word
- *
- * @return - Vietnamese meaning of Word
- */
-String Word_getVietnamese(Word word)
-{
-  return word->vietnamese;
-}
-
-/**
- * Get Key from Word
- *
- * @param word - Getted Word
- *
- * @return Key of Word
- */
-String Word_getKey(const Word word)
-{
-  return Word_getEnglsh(word);
-}
-
 #endif
