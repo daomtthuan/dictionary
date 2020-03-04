@@ -90,10 +90,12 @@ void Dictionary_loadData(Dictionary dictionary)
 
   String enLine = String_create();
   String viLine = String_create();
-  char cursor = fgetc(file);
+
+  char cursor;
   bool isEnLine = true;
 
-  while (cursor != EOF)
+  fflush(stdin);
+  while ((cursor = fgetc(file)) != EOF)
   {
     if (cursor != '\n')
     {
@@ -109,8 +111,6 @@ void Dictionary_loadData(Dictionary dictionary)
         viLine = String_create();
       }
     }
-
-    cursor = fgetc(file);
   }
 
   String_destroy(enLine);

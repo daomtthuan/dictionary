@@ -21,7 +21,7 @@ typedef char *String;
 String String_create()
 {
   String string = (String)malloc(sizeof(char));
-  string[0] = '\0';
+  strcpy(string, "");
   return string;
 }
 

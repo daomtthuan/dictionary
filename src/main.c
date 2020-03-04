@@ -3,8 +3,10 @@
 int main()
 {
     bool loop = true;
-    String word = String_create();
+    String english = String_create();
     Dictionary dictionary = Dictionary_create();
+    char cursor;
+
     Dictionary_loadData(dictionary);
 
     Program_welcome();
@@ -22,7 +24,7 @@ int main()
         case '1':
             printf("\n Nhập từ muốn tra cứu: ");
             fflush(stdin);
-            Program_searchResult(Dictionary_search(dictionary, gets(word)));
+            Program_searchResult(Dictionary_search(dictionary, gets(english)));
             break;
 
         case '2':
@@ -42,7 +44,7 @@ int main()
         }
     }
 
-    String_destroy(word);
+    String_destroy(english);
     Dictionary_destroy(dictionary);
     return 0;
 }

@@ -32,8 +32,8 @@ typedef struct WordStruct *Word;
 Word Word_create(const String english, const String vietnamese)
 {
   Word word = (Word)malloc(sizeof(struct WordStruct));
-  word->english = (String)malloc(sizeof(english));
-  word->vietnamese = (String)malloc(sizeof(vietnamese));
+  word->english = (String)malloc(sizeof(char) * (strlen(english) + 1));
+  word->vietnamese = (String)malloc(sizeof(char) * (strlen(vietnamese) + 1));
 
   strcpy(word->english, english);
   strcpy(word->vietnamese, vietnamese);
