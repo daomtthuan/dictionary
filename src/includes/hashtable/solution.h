@@ -1,5 +1,5 @@
-#ifndef __HASH_SOLUTION_HASHTABLE_INCLUDE_
-#define __HASH_SOLUTION_HASHTABLE_INCLUDE_
+#ifndef _HASH_SOLUTION_HASHTABLE_INCLUDE_
+#define _HASH_SOLUTION_HASHTABLE_INCLUDE_
 
 #include "./bucket.h"
 
@@ -18,7 +18,7 @@
  *
  * @return the index of Bucket in Hashtable
  */
-size_t Hash_separate(size_t code, size_t length)
+size_t HashSolution_executeNumber(size_t code, size_t length)
 {
   size_t result = 0;
   while (code > 0)
@@ -37,7 +37,7 @@ size_t Hash_separate(size_t code, size_t length)
  *
  * @return the index of Bucket in Hashtable
  */
-size_t Hash_execute(const String key, size_t length)
+size_t HashSolution_executeString(const String key, size_t length)
 {
   size_t index = 0, code = 0;
   // Convert key (string) to ncode umber by "sum ascii code number" solution
@@ -46,7 +46,7 @@ size_t Hash_execute(const String key, size_t length)
     code += tolower(key[index]);
     index++;
   }
-  return Hash_separate(code, length);
+  return HashSolution_executeNumber(code, length);
 }
 
 #endif

@@ -1,13 +1,10 @@
 #ifndef _DICTIONARY_TYPE_INCLUDE_
 #define _DICTIONARY_TYPE_INCLUDE_
 
-#include "./hashtable/hashtable.h"
+#include "../hashtable/hashtable.h"
 #include "./program.h"
 
 //--------------------------------------------------
-
-// Data File
-#define DATA_FILE "./data/data.txt"
 
 // Dictionary type
 typedef Hashtable Dictionary;
@@ -84,9 +81,9 @@ bool Dictionary_delete(Dictionary dictionary, const String english)
  *
  * @param dictionary - Dictionary
  */
-void Dictionary_loadData(Dictionary dictionary)
+void Dictionary_loadData(Dictionary dictionary, const String dataFile)
 {
-  FILE *file = fopen(DATA_FILE, "r+");
+  FILE *file = fopen(dataFile, "r+");
 
   fflush(stdin);
   char cursor = fgetc(file);

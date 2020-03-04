@@ -1,7 +1,7 @@
 #ifndef _HASHTABLE_INCLUDE_
 #define _HASHTABLE_INCLUDE_
 
-#include "./hash-solution.h"
+#include "./solution.h"
 
 //--------------------------------------------------
 
@@ -65,7 +65,7 @@ void Hashtable_destroy(Hashtable hashTable)
  */
 BucketHashtable Hashtable_getBucket(const Hashtable hashTable, const String key)
 {
-  BucketHashtable bucket = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
+  BucketHashtable bucket = hashTable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
   while (bucket != NULL)
   {
     if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(bucket->data)))
@@ -88,7 +88,7 @@ BucketHashtable Hashtable_getBucket(const Hashtable hashTable, const String key)
  */
 void Hashtable_insertElement(Hashtable hashTable, const ElementHashtable element)
 {
-  size_t index = Hash_execute(ElementHashtable_getKey(element), LENGTH_HASHTABLE);
+  size_t index = HashSolution_executeString(ElementHashtable_getKey(element), LENGTH_HASHTABLE);
   BucketHashtable currentBucket = hashTable[index];
   hashTable[index] = Bucket_create(element, currentBucket);
 }
@@ -101,7 +101,7 @@ void Hashtable_insertElement(Hashtable hashTable, const ElementHashtable element
  */
 void Hashtable_deleteElement(Hashtable hashTable, const String key)
 {
-  size_t index = Hash_execute(key, LENGTH_HASHTABLE);
+  size_t index = HashSolution_executeString(key, LENGTH_HASHTABLE);
   if (hashTable[index] != NULL)
   {
     BucketHashtable currentBucket = hashTable[index];

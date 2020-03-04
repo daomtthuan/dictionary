@@ -1,7 +1,7 @@
 #ifndef _PROGRAM_INCLUDE_
 #define _PROGRAM_INCLUDE_
 
-#include "./types/word.h"
+#include "../types/word.h"
 
 //--------------------------------------------------
 

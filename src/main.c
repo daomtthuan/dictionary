@@ -1,4 +1,5 @@
-#include "./includes/dictionary.h"
+#include "./includes/program/config.h"
+#include "./includes/program/dictionary.h"
 
 int main()
 {
@@ -7,7 +8,7 @@ int main()
     Dictionary dictionary = Dictionary_create();
     char cursor;
 
-    Dictionary_loadData(dictionary);
+    Dictionary_loadData(dictionary, CONFIG_DATA_FILE);
 
     Program_welcome();
     while (loop)
