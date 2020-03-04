@@ -1,12 +1,12 @@
-#ifndef _HASH_TYPE_INCLUDE_
-#define _HASH_TYPE_INCLUDE_
+#ifndef __HASH_SOLUTION_HASHTABLE_INCLUDE_
+#define __HASH_SOLUTION_HASHTABLE_INCLUDE_
 
-#include "bucket.h"
+#include "./bucket.h"
 
 //--------------------------------------------------
 
 // Mod of separate
-#define MOD_SEPARATE 100
+#define HASH_SOLUTION_MOD_SEPARATE 100
 
 //--------------------------------------------------
 
@@ -14,28 +14,28 @@
  * Hash code number to index of Bucket by "Separate" solution
  *
  * @param code number code
- * @param length length pf HashTable
+ * @param length length pf Hashtable
  *
- * @return the index of Bucket in HashTable
+ * @return the index of Bucket in Hashtable
  */
 size_t Hash_separate(size_t code, size_t length)
 {
   size_t result = 0;
   while (code > 0)
   {
-    result += code % MOD_SEPARATE;
-    code /= MOD_SEPARATE;
+    result += code % HASH_SOLUTION_MOD_SEPARATE;
+    code /= HASH_SOLUTION_MOD_SEPARATE;
   }
   return result % length;
 }
 
 /**
- * Hash key element to index of Bucket in HashTable
+ * Hash key element to index of Bucket in Hashtable
  *
  * @param key Key of Element
- * @param length length pf HashTable
+ * @param length length pf Hashtable
  *
- * @return the index of Bucket in HashTable
+ * @return the index of Bucket in Hashtable
  */
 size_t Hash_execute(const String key, size_t length)
 {

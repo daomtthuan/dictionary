@@ -1,25 +1,25 @@
-#ifndef _NODE_TYPE_INCLUDE_
-#define _NODE_TYPE_INCLUDE_
+#ifndef _NODE_HASHTABLE_INCLUDE_
+#define _NODE_HASHTABLE_INCLUDE_
 
-#include "word.h"
+#include "../types/word.h"
 
 //--------------------------------------------------
 
 // Element type
-typedef Word Element;
+typedef Word ElementHashtable;
 
 // Node struct
-struct NodeStruct
+struct NodeHashtableStruct
 {
   // Element
-  Element data;
+  ElementHashtable data;
 
   // Next Node
-  struct NodeStruct *next;
+  struct NodeHashtableStruct *next;
 };
 
 // Node type
-typedef struct NodeStruct Node;
+typedef struct NodeHashtableStruct NodeHashtable;
 
 //--------------------------------------------------
 
@@ -30,7 +30,7 @@ typedef struct NodeStruct Node;
  *
  * @return - Key of Element
  */
-String Element_getKey(const Element element)
+String ElementHashtable_getKey(const ElementHashtable element)
 {
   return Word_getKey(element);
 }

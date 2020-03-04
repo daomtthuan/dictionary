@@ -51,6 +51,9 @@ void Word_destroy(Word word)
   free(word->english);
   free(word->vietnamese);
   free(word);
+  word->english = NULL;
+  word->vietnamese = NULL;
+  word = NULL;
 }
 
 //--------------------------------------------------

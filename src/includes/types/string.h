@@ -1,6 +1,7 @@
 #ifndef _STRING_TYPE_INCLUDE_
 #define _STRING_TYPE_INCLUDE_
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +34,7 @@ String String_create()
 void String_destroy(String string)
 {
   free(string);
+  string = NULL;
 }
 
 //--------------------------------------------------

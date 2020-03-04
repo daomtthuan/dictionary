@@ -1,12 +1,12 @@
-#ifndef _BUCKET_TYPE_INCLUDE_
-#define _BUCKET_TYPE_INCLUDE_
+#ifndef _BUCKET_HASHTABLE_INCLUDE_
+#define _BUCKET_HASHTABLE_INCLUDE_
 
-#include "node.h"
+#include "./node.h"
 
 //--------------------------------------------------
 
 // Bucket type
-typedef Node *Bucket;
+typedef NodeHashtable *BucketHashtable;
 
 //--------------------------------------------------
 
@@ -17,9 +17,9 @@ typedef Node *Bucket;
  *
  * @return - New Bucket
  */
-Bucket Bucket_create(const Element data, const Bucket nextBucket)
+BucketHashtable Bucket_create(const ElementHashtable data, const BucketHashtable nextBucket)
 {
-  Bucket bucket = (Bucket)malloc(sizeof(Node));
+  BucketHashtable bucket = (BucketHashtable)malloc(sizeof(NodeHashtable));
   bucket->data = data;
   bucket->next = nextBucket;
   return bucket;
@@ -30,10 +30,11 @@ Bucket Bucket_create(const Element data, const Bucket nextBucket)
  *
  * @param bucket - Destroyed Bucket
  */
-void Bucket_destroy(Bucket bucket)
+void Bucket_destroy(BucketHashtable bucket)
 {
   Word_destroy(bucket->data);
   free(bucket);
+  bucket = NULL;
 }
 
 #endif

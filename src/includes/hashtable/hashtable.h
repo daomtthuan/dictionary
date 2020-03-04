@@ -1,26 +1,26 @@
-#ifndef _HASHTABLE_TYPE_INCLUDE_
-#define _HASHTABLE_TYPE_INCLUDE_
+#ifndef _HASHTABLE_INCLUDE_
+#define _HASHTABLE_INCLUDE_
 
-#include "hash.h"
+#include "./hash-solution.h"
 
 //--------------------------------------------------
 
 // Length of Hash Table
 #define LENGTH_HASHTABLE 100
 
-// HashTable type
-typedef Bucket *HashTable;
+// Hashtable type
+typedef BucketHashtable *Hashtable;
 
 //--------------------------------------------------
 
 /**
- * Create HashTable
+ * Create Hashtable
  *
- * @return - New HashTable with null Buckets
+ * @return - New Hashtable with null Buckets
  */
-HashTable HashTable_create()
+Hashtable Hashtable_create()
 {
-  HashTable hashTable = (HashTable)malloc(sizeof(Bucket) * LENGTH_HASHTABLE);
+  Hashtable hashTable = (Hashtable)malloc(sizeof(BucketHashtable) * LENGTH_HASHTABLE);
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
@@ -31,18 +31,18 @@ HashTable HashTable_create()
 }
 
 /**
- * Destroy HashTable
+ * Destroy Hashtable
  *
  * @param hashTable - Destroyed HastaTable
  */
-void HashTable_destroy(HashTable hashTable)
+void Hashtable_destroy(Hashtable hashTable)
 {
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
     while (hashTable[index] != NULL)
     {
-      Bucket bucket = hashTable[index]->next;
+      BucketHashtable bucket = hashTable[index]->next;
       Bucket_destroy(hashTable[index]);
       hashTable[index] = bucket;
     }
@@ -50,6 +50,7 @@ void HashTable_destroy(HashTable hashTable)
   }
 
   free(hashTable);
+  hashTable = NULL;
 }
 
 //--------------------------------------------------
@@ -57,17 +58,17 @@ void HashTable_destroy(HashTable hashTable)
 /**
  * Get Bucket by Key
  *
- * @param hashTable - Getted HashTable
+ * @param hashTable - Getted Hashtable
  * @param key - Compared key
  *
- * @return Bucket in HashTable
+ * @return Bucket in Hashtable
  */
-Bucket HashTable_getBucket(const HashTable hashTable, const String key)
+BucketHashtable Hashtable_getBucket(const Hashtable hashTable, const String key)
 {
-  Bucket bucket = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
+  BucketHashtable bucket = hashTable[Hash_execute(key, LENGTH_HASHTABLE)];
   while (bucket != NULL)
   {
-    if (String_isEqualIgnoreCase(key, Element_getKey(bucket->data)))
+    if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(bucket->data)))
     {
       return bucket;
     }
@@ -82,29 +83,29 @@ Bucket HashTable_getBucket(const HashTable hashTable, const String key)
 /**
  * Insert Element
  *
- * @param hashTable - HashTable
+ * @param hashTable - Hashtable
  * @param element - Inserted Element
  */
-void HashTable_insertElement(HashTable hashTable, const Element element)
+void Hashtable_insertElement(Hashtable hashTable, const ElementHashtable element)
 {
-  size_t index = Hash_execute(Element_getKey(element), LENGTH_HASHTABLE);
-  Bucket currentBucket = hashTable[index];
+  size_t index = Hash_execute(ElementHashtable_getKey(element), LENGTH_HASHTABLE);
+  BucketHashtable currentBucket = hashTable[index];
   hashTable[index] = Bucket_create(element, currentBucket);
 }
 
 /**
  * Delete Element by key
  *
- * @param hashTable - HashTable
+ * @param hashTable - Hashtable
  * @param key - Key of deleted Element
  */
-void HashTable_deleteElement(HashTable hashTable, const String key)
+void Hashtable_deleteElement(Hashtable hashTable, const String key)
 {
   size_t index = Hash_execute(key, LENGTH_HASHTABLE);
   if (hashTable[index] != NULL)
   {
-    Bucket currentBucket = hashTable[index];
-    if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->data)))
+    BucketHashtable currentBucket = hashTable[index];
+    if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(currentBucket->data)))
     {
       hashTable[index] = hashTable[index]->next;
       Bucket_destroy(currentBucket);
@@ -114,9 +115,9 @@ void HashTable_deleteElement(HashTable hashTable, const String key)
       bool deleted = false;
       while (currentBucket->next != NULL && !deleted)
       {
-        if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->next->data)))
+        if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(currentBucket->next->data)))
         {
-          Bucket nextBucket = currentBucket->next;
+          BucketHashtable nextBucket = currentBucket->next;
           currentBucket->next = nextBucket->next;
           Bucket_destroy(nextBucket);
           deleted = true;

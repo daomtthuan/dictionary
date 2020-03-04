@@ -1,8 +1,8 @@
 #ifndef _DICTIONARY_TYPE_INCLUDE_
 #define _DICTIONARY_TYPE_INCLUDE_
 
-#include "hashtable.h"
-#include "program.h"
+#include "./hashtable/hashtable.h"
+#include "./program.h"
 
 //--------------------------------------------------
 
@@ -10,7 +10,7 @@
 #define DATA_FILE "./data/data.txt"
 
 // Dictionary type
-typedef HashTable Dictionary;
+typedef Hashtable Dictionary;
 
 //--------------------------------------------------
 
@@ -21,7 +21,7 @@ typedef HashTable Dictionary;
  */
 Dictionary Dictionary_create()
 {
-  return HashTable_create();
+  return Hashtable_create();
 }
 
 /**
@@ -31,7 +31,7 @@ Dictionary Dictionary_create()
  */
 void Dictionary_destroy(Dictionary dictionary)
 {
-  HashTable_destroy(dictionary);
+  Hashtable_destroy(dictionary);
 }
 
 //--------------------------------------------------
@@ -47,9 +47,9 @@ void Dictionary_destroy(Dictionary dictionary)
  */
 bool Dictionary_insert(Dictionary dictionary, const String english, const String vietnamese)
 {
-  if (HashTable_getBucket(dictionary, english) == NULL)
+  if (Hashtable_getBucket(dictionary, english) == NULL)
   {
-    HashTable_insertElement(dictionary, Word_create(english, vietnamese));
+    Hashtable_insertElement(dictionary, Word_create(english, vietnamese));
     return true;
   }
   else
@@ -68,13 +68,13 @@ bool Dictionary_insert(Dictionary dictionary, const String english, const String
  */
 bool Dictionary_delete(Dictionary dictionary, const String english)
 {
-  if (HashTable_getBucket(dictionary, english) == NULL)
+  if (Hashtable_getBucket(dictionary, english) == NULL)
   {
     return false;
   }
   else
   {
-    HashTable_deleteElement(dictionary, english);
+    Hashtable_deleteElement(dictionary, english);
     return true;
   }
 }
@@ -88,33 +88,32 @@ void Dictionary_loadData(Dictionary dictionary)
 {
   FILE *file = fopen(DATA_FILE, "r+");
 
-  String enLine = String_create();
-  String viLine = String_create();
-
-  char cursor;
-  bool isEnLine = true;
-
   fflush(stdin);
-  while ((cursor = fgetc(file)) != EOF)
+  char cursor = fgetc(file);
+  while (cursor != EOF)
   {
-    if (cursor != '\n')
+    int line = 0;
+    String english = String_create();
+    String vietnamese = String_create();
+
+    while (line++ < 2)
     {
-      String_joinChar(isEnLine ? &enLine : &viLine, cursor);
-    }
-    else
-    {
-      isEnLine = !isEnLine;
-      if (isEnLine)
+      while (cursor != '\n')
       {
-        Dictionary_insert(dictionary, enLine, viLine);
-        enLine = String_create();
-        viLine = String_create();
+        String_joinChar(line == 1 ? &english : &vietnamese, cursor);
+        fflush(stdin);
+        cursor = fgetc(file);
       }
+
+      fflush(stdin);
+      cursor = fgetc(file);
     }
+
+    Dictionary_insert(dictionary, english, vietnamese);
+    String_destroy(english);
+    String_destroy(vietnamese);
   }
 
-  String_destroy(enLine);
-  String_destroy(viLine);
   fclose(file);
 }
 
@@ -128,7 +127,7 @@ void Dictionary_loadData(Dictionary dictionary)
  */
 Word Dictionary_search(Dictionary dictionary, const String english)
 {
-  Bucket bucket = HashTable_getBucket(dictionary, english);
+  BucketHashtable bucket = Hashtable_getBucket(dictionary, english);
   if (bucket == NULL)
   {
     return NULL;

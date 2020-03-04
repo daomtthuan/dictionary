@@ -3,7 +3,7 @@
 int main()
 {
     bool loop = true;
-    String english = String_create();
+    char english[256];
     Dictionary dictionary = Dictionary_create();
     char cursor;
 
@@ -44,7 +44,6 @@ int main()
         }
     }
 
-    String_destroy(english);
     Dictionary_destroy(dictionary);
     return 0;
 }
