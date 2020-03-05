@@ -1,21 +1,31 @@
-#ifndef _BUCKET_HASHTABLE_INCLUDE_
-#define _BUCKET_HASHTABLE_INCLUDE_
+#ifndef _NODE_HASHTABLE_INCLUDE_
+#define _NODE_HASHTABLE_INCLUDE_
 
-#include "./node.h"
+#include "../element.h"
 
 //--------------------------------------------------
 
-// Bucket type
-typedef NodeHashtable *BucketHashtable;
+// Node Hash Table struct
+struct NodeHashtableStruct
+{
+  // Element
+  Element data;
+
+  // Next Node
+  struct NodeHashtableStruct *next;
+};
+
+// Node Hash table type
+typedef struct NodeHashtableStruct NodeHashtable;
 
 //--------------------------------------------------
 
 /**
- * Create Bucket Hash table
+ * Create Node Hash table
  *
  * @param element - Element data
  *
- * @return - New Bucket
+ * @return - New Node Hash table
  */
 BucketHashtable BucketHashtable_create(const Element data, const BucketHashtable nextBucket)
 {
@@ -26,9 +36,9 @@ BucketHashtable BucketHashtable_create(const Element data, const BucketHashtable
 }
 
 /**
- * Destroy Bucket Hash table
+ * Destroy Node Hash table
  *
- * @param bucket - Destroyed Bucket
+ * @param node - Destroyed Node
  */
 void BucketHashtable_destroy(BucketHashtable bucket)
 {
