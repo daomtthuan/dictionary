@@ -9,7 +9,7 @@
 struct NodeLinkedlistStruct
 {
   // Element
-  Element data;
+  Word data;
 
   // Next Node
   struct NodeLinkedlistStruct *next;
@@ -30,7 +30,7 @@ typedef struct NodeLinkedlistStruct *NodeLinkedlist;
  *
  * @return - New Node Linked list
  */
-NodeLinkedlist NodeLinkedlist_create(Element data)
+NodeLinkedlist NodeLinkedlist_create(Word data)
 {
   NodeLinkedlist node = (NodeLinkedlist)malloc(sizeof(struct NodeLinkedlistStruct));
   node->data = data;

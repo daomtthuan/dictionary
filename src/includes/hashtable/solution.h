@@ -1,7 +1,7 @@
 #ifndef _SOLUTION_HASHTABLE_INCLUDE_
 #define _SOLUTION_HASHTABLE_INCLUDE_
 
-#include "./bucket.h"
+#include "./node.h"
 
 //--------------------------------------------------
 

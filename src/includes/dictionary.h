@@ -64,7 +64,7 @@ void Dictionary_wirteData(Element element, size_t index)
  */
 bool Dictionary_insert(Dictionary dictionary, const String english, const String vietnamese)
 {
-  if (Hashtable_getBucket(dictionary, english) == NULL)
+  if (Hashtable_getNode(dictionary, english) == NULL)
   {
     if (Hashtable_insertElement(dictionary, Word_create(english, vietnamese)))
     {
@@ -86,7 +86,7 @@ bool Dictionary_insert(Dictionary dictionary, const String english, const String
  */
 bool Dictionary_delete(Dictionary dictionary, const String english)
 {
-  if (Hashtable_getBucket(dictionary, english) != NULL)
+  if (Hashtable_getNode(dictionary, english) != NULL)
   {
     if (Hashtable_deleteElement(dictionary, english))
     {
@@ -142,14 +142,14 @@ void Dictionary_loadData(Dictionary dictionary)
  */
 Word Dictionary_search(Dictionary dictionary, const String english)
 {
-  BucketHashtable bucket = Hashtable_getBucket(dictionary, english);
-  if (bucket == NULL)
+  NodeHashtable node = Hashtable_getNode(dictionary, english);
+  if (node == NULL)
   {
     return NULL;
   }
   else
   {
-    return bucket->data;
+    return node->data;
   }
 }
 

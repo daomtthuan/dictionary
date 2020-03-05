@@ -16,7 +16,7 @@ struct NodeHashtableStruct
 };
 
 // Node Hash table type
-typedef struct NodeHashtableStruct NodeHashtable;
+typedef struct NodeHashtableStruct *NodeHashtable;
 
 //--------------------------------------------------
 
@@ -24,15 +24,16 @@ typedef struct NodeHashtableStruct NodeHashtable;
  * Create Node Hash table
  *
  * @param element - Element data
+ * @param nextNode - Next node
  *
  * @return - New Node Hash table
  */
-BucketHashtable BucketHashtable_create(const Element data, const BucketHashtable nextBucket)
+NodeHashtable NodeHashtable_create(const Element data, const NodeHashtable nextNode)
 {
-  BucketHashtable bucket = (BucketHashtable)malloc(sizeof(NodeHashtable));
-  bucket->data = data;
-  bucket->next = nextBucket;
-  return bucket;
+  NodeHashtable node = (NodeHashtable)malloc(sizeof(struct NodeHashtableStruct));
+  node->data = data;
+  node->next = nextNode;
+  return node;
 }
 
 /**
@@ -40,10 +41,10 @@ BucketHashtable BucketHashtable_create(const Element data, const BucketHashtable
  *
  * @param node - Destroyed Node
  */
-void BucketHashtable_destroy(BucketHashtable bucket)
+void NodeHashtable_destroy(NodeHashtable node)
 {
-  Word_destroy(bucket->data);
-  free(bucket);
+  Word_destroy(node->data);
+  free(node);
 }
 
 #endif

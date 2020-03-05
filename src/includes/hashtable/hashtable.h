@@ -9,18 +9,18 @@
 #define LENGTH_HASHTABLE 100
 
 // Hashtable type
-typedef BucketHashtable *Hashtable;
+typedef NodeHashtable *Hashtable;
 
 //--------------------------------------------------
 
 /**
  * Create Hashtable
  *
- * @return - New Hashtable with null Buckets
+ * @return - New Hashtable with null Nodes bucket
  */
 Hashtable Hashtable_create()
 {
-  Hashtable hashtable = (Hashtable)malloc(sizeof(BucketHashtable) * LENGTH_HASHTABLE);
+  Hashtable hashtable = (Hashtable)malloc(sizeof(NodeHashtable) * LENGTH_HASHTABLE);
   size_t index = 0;
   while (index < LENGTH_HASHTABLE)
   {
@@ -42,9 +42,9 @@ void Hashtable_destroy(Hashtable hashtable)
   {
     while (hashtable[index] != NULL)
     {
-      BucketHashtable bucket = hashtable[index]->next;
-      BucketHashtable_destroy(hashtable[index]);
-      hashtable[index] = bucket;
+      NodeHashtable node = hashtable[index]->next;
+      NodeHashtable_destroy(hashtable[index]);
+      hashtable[index] = node;
     }
     index++;
   }
@@ -54,25 +54,25 @@ void Hashtable_destroy(Hashtable hashtable)
 //--------------------------------------------------
 
 /**
- * Get Bucket by Key
+ * Get Node by Key
  *
  * @param hashtable - Getted Hashtable
  * @param key - Compared key
  *
- * @return Bucket in Hashtable
+ * @return Node in Hashtable
  */
-BucketHashtable Hashtable_getBucket(const Hashtable hashtable, const String key)
+NodeHashtable Hashtable_getNode(const Hashtable hashtable, const String key)
 {
-  BucketHashtable bucket = hashtable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
-  while (bucket != NULL)
+  NodeHashtable node = hashtable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
+  while (node != NULL)
   {
-    if (String_isEqualIgnoreCase(key, Element_getKey(bucket->data)))
+    if (String_isEqualIgnoreCase(key, Element_getKey(node->data)))
     {
-      return bucket;
+      return node;
     }
     else
     {
-      bucket = bucket->next;
+      node = node->next;
     }
   }
   return NULL;
@@ -89,8 +89,8 @@ BucketHashtable Hashtable_getBucket(const Hashtable hashtable, const String key)
 bool Hashtable_insertElement(Hashtable hashtable, const Element element)
 {
   size_t index = HashSolution_executeString(Element_getKey(element), LENGTH_HASHTABLE);
-  BucketHashtable currentBucket = hashtable[index];
-  hashtable[index] = BucketHashtable_create(element, currentBucket);
+  NodeHashtable currentNode = hashtable[index];
+  hashtable[index] = NodeHashtable_create(element, currentNode);
   return true;
 }
 
@@ -107,28 +107,28 @@ bool Hashtable_deleteElement(Hashtable hashtable, const String key)
   size_t index = HashSolution_executeString(key, LENGTH_HASHTABLE);
   if (hashtable[index] != NULL)
   {
-    BucketHashtable currentBucket = hashtable[index];
-    if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->data)))
+    NodeHashtable currentNode = hashtable[index];
+    if (String_isEqualIgnoreCase(key, Element_getKey(currentNode->data)))
     {
       hashtable[index] = hashtable[index]->next;
-      BucketHashtable_destroy(currentBucket);
+      NodeHashtable_destroy(currentNode);
       return true;
     }
     else
     {
       bool deleted = false;
-      while (currentBucket->next != NULL && !deleted)
+      while (currentNode->next != NULL && !deleted)
       {
-        if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->next->data)))
+        if (String_isEqualIgnoreCase(key, Element_getKey(currentNode->next->data)))
         {
-          BucketHashtable nextBucket = currentBucket->next;
-          currentBucket->next = nextBucket->next;
-          BucketHashtable_destroy(nextBucket);
+          NodeHashtable nextNode = currentNode->next;
+          currentNode->next = nextNode->next;
+          NodeHashtable_destroy(nextNode);
           deleted = true;
         }
         else
         {
-          currentBucket = currentBucket->next;
+          currentNode = currentNode->next;
         }
       }
       return deleted;
@@ -148,16 +148,16 @@ bool Hashtable_deleteElement(Hashtable hashtable, const String key)
  */
 void Hashtable_forEach(const Hashtable hashtable, void (*action)(Element _element, size_t _index))
 {
-  BucketHashtable bucket;
+  NodeHashtable node;
   size_t indexBucket = 0;
   size_t index = 0;
   while (indexBucket < LENGTH_HASHTABLE)
   {
-    bucket = hashtable[indexBucket++];
-    while (bucket != NULL)
+    node = hashtable[indexBucket++];
+    while (node != NULL)
     {
-      action(bucket->data, index++);
-      bucket = bucket->next;
+      action(node->data, index++);
+      node = node->next;
     }
   }
 }

@@ -1,156 +1,100 @@
 #ifndef _HISTORY_INCLUDE_
 #define _HISTORY_INCLUDE_
 
-#include "./hashtable/hashtable.h"
-#include "./program/console.h"
-#include "./program/config.h"
+#include "./linkedlist/linkedlist.h"
 
 //--------------------------------------------------
 
-// Dictionary type
-typedef Hashtable Dictionary;
+// History type
+typedef Linkedlist History;
 
-//--------------------------------------------------
-
-/**
- * Create Dictionary
- *
- * @return New Dictionary
- */
-Dictionary Dictionary_create()
-{
-  return Hashtable_create();
-}
-
-/**
- * Destroy Dictionary
- *
- * @param dictionary Destroyed Dictionary
- */
-void Dictionary_destroy(Dictionary dictionary)
-{
-  Hashtable_destroy(dictionary);
-}
+// CursorHistory type
+typedef NodeLinkedlist CursorHistory;
 
 //--------------------------------------------------
 
 /**
- * Write data element in data file
+ * Create History
  *
- * @param element - Each element
- * @param index - Index of each element
+ * @return New History
  */
-void Dictionary_wirteData(Element element, size_t index)
+History History_create()
 {
-  FILE *file = fopen(CONFIG_DATA_FILE, index == 0 ? "w" : "a");
-  fputs(element->english, file);
-  fputc('\n', file);
-
-  fputs(element->vietnamese, file);
-  fputc('\n', file);
-
-  fclose(file);
-  file = NULL;
+  return Linkedlist_create();
 }
 
 /**
- * Insert Word
+ * Destroy History
  *
- * @param dictionary - Dictionary
- * @param english - English meaning of inserted Word
- * @param vietnamese - Vietnamese meaning of inserted Word
- *
- * @return Insert result success or not
+ * @param history Destroyed History
  */
-bool Dictionary_insert(Dictionary dictionary, const String english, const String vietnamese)
+void History_destroy(History history)
 {
-  if (Hashtable_getBucket(dictionary, english) == NULL)
-  {
-    if (Hashtable_insertElement(dictionary, Word_create(english, vietnamese)))
-    {
-      Hashtable_forEach(dictionary, Dictionary_wirteData);
-      return true;
-    }
-  }
+  Linkedlist_destroy(history);
+}
 
-  return false;
+//--------------------------------------------------
+
+/**
+ * Insert element into History
+ *
+ * @param history History
+ * @param english English word
+ * @param vietnamese Vietnamese meaning
+ */
+void History_insert(History history, String english, String vietnamese)
+{
+  Linkedlist_insert(history, Word_create(english, vietnamese));
+}
+
+//--------------------------------------------------
+
+/**
+ * Get data at the cursor history
+ *
+ * @param cursor Cursor History
+ *
+ * @return Word at cursor history
+ */
+Word History_getData(CursorHistory cursor)
+{
+  return cursor->data;
 }
 
 /**
- * Delete Word
+ * Get Cursor History
  *
- * @param dictionary - Dictionary
- * @param english - English meaning of Word
+ * @param history History
  *
- * @return Delete result success or not
+ * @return Cursor History
  */
-bool Dictionary_delete(Dictionary dictionary, const String english)
+CursorHistory History_getCursor(History history)
 {
-  if (Hashtable_getBucket(dictionary, english) != NULL)
-  {
-    if (Hashtable_deleteElement(dictionary, english))
-    {
-      Hashtable_forEach(dictionary, Dictionary_wirteData);
-      return true;
-    }
-  }
-
-  return false;
+  return history->first;
 }
 
 /**
- * Load Word from data file
+ * Get next at the cursor history
  *
- * @param dictionary - Dictionary
+ * @param cursor Cursor History
+ *
+ * @return The next at Cursor History
  */
-void Dictionary_loadData(Dictionary dictionary)
+CursorHistory History_getNext(CursorHistory cursor)
 {
-  FILE *file = fopen(CONFIG_DATA_FILE, "r+");
-
-  char cursor = fgetc(file);
-  while (cursor != EOF)
-  {
-    int line = 0;
-    String english = String_createEmpty();
-    String vietnamese = String_createEmpty();
-
-    while (line++ < 2)
-    {
-      while (cursor != '\n')
-      {
-        String_joinChar(line == 1 ? &english : &vietnamese, cursor);
-        cursor = fgetc(file);
-      }
-
-      cursor = fgetc(file);
-    }
-
-    Hashtable_insertElement(dictionary, Word_create(english, vietnamese));
-    String_destroy(english);
-    String_destroy(vietnamese);
-  }
-  fclose(file);
+  return cursor->next;
 }
 
 /**
- * Search Word
+ * Get previous at the cursor history
  *
- * @param dictionary - Dictionary
- * @param english - English meaning of Word
+ * @param cursor Cursor History
  *
- * @return Search result found Word or NULL if not found
+ * @return The previous at Cursor History
  */
-Word Dictionary_search(Dictionary dictionary, const String english)
+CursorHistory History_getPrevious(CursorHistory cursor)
 {
-  BucketHashtable bucket = Hashtable_getBucket(dictionary, english);
-  if (bucket == NULL)
-  {
-    return NULL;
-  }
-  else
-  {
-    return bucket->data;
-  }
+  return cursor->previous;
 }
 
 #endif

@@ -56,9 +56,9 @@ void Linkedlist_destroy(Linkedlist list)
  *
  * @param element - Data
  */
-void Linkedlist_insert(Linkedlist list, Element element)
+void Linkedlist_insert(Linkedlist list, Word data)
 {
-  NodeLinkedlist node = NodeLinkedlist_create(element);
+  NodeLinkedlist node = NodeLinkedlist_create(data);
   if (list->first == NULL)
   {
     list->first = node;
