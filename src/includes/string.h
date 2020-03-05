@@ -1,5 +1,5 @@
-#ifndef _STRING_TYPE_INCLUDE_
-#define _STRING_TYPE_INCLUDE_
+#ifndef _STRING_INCLUDE_
+#define _STRING_INCLUDE_
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -19,7 +19,7 @@ typedef char *String;
  *
  * @return - Empty String
  */
-String String_create()
+String String_createEmpty()
 {
   String string = (String)malloc(sizeof(char));
   strcpy(string, "");
@@ -82,6 +82,26 @@ void String_joinChar(String *string, const char c)
   (*string) = (String)realloc((*string), sizeof(char) * (length + 2));
   (*string)[length] = c;
   (*string)[length + 1] = '\0';
+}
+
+/**
+ * Input String
+ *
+ * @return Inputed String
+ */
+String String_input()
+{
+  String string = (String)malloc(sizeof(char));
+  strcpy(string, "");
+
+  fflush(stdin);
+  char cursor;
+  while ((cursor = getchar()) != '\n' && cursor != EOF)
+  {
+    String_joinChar(&string, cursor);
+  }
+
+  return string;
 }
 
 #endif

@@ -66,7 +66,7 @@ BucketHashtable Hashtable_getBucket(const Hashtable hashtable, const String key)
   BucketHashtable bucket = hashtable[HashSolution_executeString(key, LENGTH_HASHTABLE)];
   while (bucket != NULL)
   {
-    if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(bucket->data)))
+    if (String_isEqualIgnoreCase(key, Element_getKey(bucket->data)))
     {
       return bucket;
     }
@@ -86,9 +86,9 @@ BucketHashtable Hashtable_getBucket(const Hashtable hashtable, const String key)
  *
  * @return Bool result of success or not
  */
-bool Hashtable_insertElement(Hashtable hashtable, const ElementHashtable element)
+bool Hashtable_insertElement(Hashtable hashtable, const Element element)
 {
-  size_t index = HashSolution_executeString(ElementHashtable_getKey(element), LENGTH_HASHTABLE);
+  size_t index = HashSolution_executeString(Element_getKey(element), LENGTH_HASHTABLE);
   BucketHashtable currentBucket = hashtable[index];
   hashtable[index] = BucketHashtable_create(element, currentBucket);
   return true;
@@ -108,7 +108,7 @@ bool Hashtable_deleteElement(Hashtable hashtable, const String key)
   if (hashtable[index] != NULL)
   {
     BucketHashtable currentBucket = hashtable[index];
-    if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(currentBucket->data)))
+    if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->data)))
     {
       hashtable[index] = hashtable[index]->next;
       BucketHashtable_destroy(currentBucket);
@@ -119,7 +119,7 @@ bool Hashtable_deleteElement(Hashtable hashtable, const String key)
       bool deleted = false;
       while (currentBucket->next != NULL && !deleted)
       {
-        if (String_isEqualIgnoreCase(key, ElementHashtable_getKey(currentBucket->next->data)))
+        if (String_isEqualIgnoreCase(key, Element_getKey(currentBucket->next->data)))
         {
           BucketHashtable nextBucket = currentBucket->next;
           currentBucket->next = nextBucket->next;
@@ -146,7 +146,7 @@ bool Hashtable_deleteElement(Hashtable hashtable, const String key)
  * --- @param _element - Element in action
  * --- @param _index - Index element in action
  */
-void Hashtable_forEach(const Hashtable hashtable, void (*action)(ElementHashtable _element, size_t _index))
+void Hashtable_forEach(const Hashtable hashtable, void (*action)(Element _element, size_t _index))
 {
   BucketHashtable bucket;
   size_t indexBucket = 0;
