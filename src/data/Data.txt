@@ -1,151 +1,151 @@
-able
-có năng lực
 ice
 băng đá
-bleed
-mất máu
+able
+có năng lực
 fame
 tiếng tăm
+bleed
+mất máu
 hide
 trốn
 cheek
 gò má
-job
-công việc
 make
 chế tạo
+job
+công việc
 camera
 máy ảnh
-edit
-biên tập
-pen
-viết mực
 same
 giống nhau
-large
-to lớn
+pen
+viết mực
+edit
+biên tập
 vale
 thung lũng
-home
-nhà
+large
+to lớn
 king
 vua
-fish
-con cá
+home
+nhà
 may
 tháng năm
-give
-cho
+fish
+con cá
 paw
 móng vuốt
-box
-cái hộp
-hope
-hy vọng
+give
+cho
 react
 phản ứng
-erase
-xoá bỏ
-kite
-con diều
+hope
+hy vọng
+box
+cái hộp
 raft
 bè gỗ
+kite
+con diều
+erase
+xoá bỏ
 rabbit
 con thỏ
 apple
 trái táo
-sell
-bán
-tree
-cái cây
 yard
 sân
+tree
+cái cây
+sell
+bán
 giro
 chuyển khoản
 void
 trống rỗng
-actual
-thật sự
-blow
-thổi
-greet
-chào hỏi
-loud
-ầm ĩ
 yes
 đồng ý
-level
-cấp độ
+loud
+ầm ĩ
+greet
+chào hỏi
+blow
+thổi
+actual
+thật sự
 wait
 chờ đợi
-note
-ghi chú
-orange
-màu cam
+level
+cấp độ
 zip
 khoá kéo
+orange
+màu cam
+note
+ghi chú
 warm
 ấm áp
 delight
 vui thích
 xmas
 giáng sinh
-into
-vào trong
-kiss
-hôn
 shop
 cửa hàng
-queen
-nữ hoàng
+kiss
+hôn
+into
+vào trong
 under
 phía dưới
-jump
-nhảy
-over
-bên trên
+queen
+nữ hoàng
 zone
 khu vực
-never
-không bao giờ
+over
+bên trên
+jump
+nhảy
 nerve
 lo lắng
+never
+không bao giờ
 fashion
 thời trang
-water
-nước
 zero
 số không
-essay
-bài tiểu luận
+water
+nước
 only
 duy nhất
-july
-tháng bảy
+essay
+bài tiểu luận
 xray
 tia x quang
-quiet
-yên tĩnh
+july
+tháng bảy
 xenon
 khí xenon
+quiet
+yên tĩnh
 union
 hợp nhất
-cherry
-quả anh đào
-tempt
-cám dỗ
 usual
 thông thường
+tempt
+cám dỗ
+cherry
+quả anh đào
 town
 thị trấn
 quiz
 đố vui
 display
 phô bày
-invert
-lộn ngược
 volume
 dung tích
+invert
+lộn ngược
 memory
 ký ức
 yellow

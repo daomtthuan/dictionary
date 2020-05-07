@@ -121,21 +121,26 @@ int main()
                 if (cursor != NULL)
                 {
                     Console_ShowSearchResult(History_GetData(cursor));
-                    printf("\tDùng 2 phím: w cho cuộn lên và s cho cuộn xuống để xem lịch sử.\n\tNhấn phím bất kì khác để trở về màn hình danh sách chức năng.");
+                    printf("\tDùng 2 phím mũi tên cuộn lên và xuống để xem lịch sử.\n\tNhấn phím khác để trở về màn hình danh sách chức năng.");
 
                     switch (getch())
                     {
-                    case 'w':
-                        if (History_Next(cursor) != NULL)
+                    case 224:
+                        switch (getch())
                         {
-                            cursor = History_Next(cursor);
-                        }
-                        break;
+                        case 72:
+                            if (History_Next(cursor) != NULL)
+                            {
+                                cursor = History_Next(cursor);
+                            }
+                            break;
 
-                    case 's':
-                        if (History_Previous(cursor) != NULL)
-                        {
-                            cursor = History_Previous(cursor);
+                        case 80:
+                            if (History_Previous(cursor) != NULL)
+                            {
+                                cursor = History_Previous(cursor);
+                            }
+                            break;
                         }
                         break;
 
@@ -152,9 +157,6 @@ int main()
                     loopHistory = false;
                 }
             }
-            break;
-
-        default:
             break;
         }
     }
