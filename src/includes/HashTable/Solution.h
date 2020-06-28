@@ -1,12 +1,8 @@
 #ifndef _SOLUTION_HASHTABLE_INCLUDE_
 #define _SOLUTION_HASHTABLE_INCLUDE_
 
+#include "../Config.h"
 #include "./Node.h"
-
-//--------------------------------------------------
-
-// Mod of separate
-#define HASH_SOLUTION_MOD_SEPARATE 100
 
 //--------------------------------------------------
 
@@ -18,11 +14,9 @@
  *
  * @return the index of Bucket in Hash Table
  */
-size_t HashSolution_HashNumber(size_t code, size_t length)
-{
+size_t HashSolution_HashNumber(size_t code, size_t length) {
   size_t result = 0;
-  while (code > 0)
-  {
+  while (code > 0) {
     result += code % HASH_SOLUTION_MOD_SEPARATE;
     code /= HASH_SOLUTION_MOD_SEPARATE;
   }
@@ -37,12 +31,10 @@ size_t HashSolution_HashNumber(size_t code, size_t length)
  *
  * @return the index of Bucket in Hash Table
  */
-size_t HashSolution_HashString(const String key, size_t length)
-{
+size_t HashSolution_HashString(const String key, size_t length) {
   size_t index = 0, code = 0;
   // Convert key (string) to ncode umber by "sum ascii code number" solution
-  while (index < strlen(key))
-  {
+  while (index < strlen(key)) {
     code += tolower(key[index]);
     index++;
   }

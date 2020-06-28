@@ -6,8 +6,7 @@
 //--------------------------------------------------
 
 // Word struct
-struct WordStruct
-{
+struct WordStruct {
   // English Word
   String english;
 
@@ -29,8 +28,7 @@ typedef struct WordStruct *Word;
  *
  * @return - New Word
  */
-Word Word_Create(const String english, const String vietnamese)
-{
+Word Word_Create(const String english, const String vietnamese) {
   Word word = (Word)malloc(sizeof(struct WordStruct));
   word->english = (String)malloc(sizeof(char) * (strlen(english) + 1));
   word->vietnamese = (String)malloc(sizeof(char) * (strlen(vietnamese) + 1));
@@ -46,8 +44,7 @@ Word Word_Create(const String english, const String vietnamese)
  *
  * @param word - Destroyed Word
  */
-void Word_Destroy(Word word)
-{
+void Word_Destroy(Word word) {
   free(word->english);
   free(word->vietnamese);
   free(word);

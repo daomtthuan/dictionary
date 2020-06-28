@@ -6,10 +6,9 @@
 //--------------------------------------------------
 
 /**
- * Show Brand
+ * Show title
  */
-void Console_ShowBrand()
-{
+void Console_ShowTitle() {
   system("cls");
   printf("\n\t*********************************************\n");
   printf("\t*                                           *\n");
@@ -24,10 +23,9 @@ void Console_ShowBrand()
 /**
  * Show Menu
  */
-void Console_ShowMenu()
-{
+void Console_ShowMenu() {
   printf("\tDanh sách chức năng:\n");
-  printf("\t\t0. Thoát chương trình.\n");
+  printf("\t\t0. Lưu dữ liệu và thoát chương trình.\n");
   printf("\t\t1. Tra cứu từ.\n");
   printf("\t\t2. Thêm từ mới.\n");
   printf("\t\t3. Xoá từ.\n");
@@ -37,9 +35,8 @@ void Console_ShowMenu()
 /**
  * Show name Function
  */
-void Console_ShowFunction(String name)
-{
-  Console_ShowBrand();
+void Console_ShowFunction(String name) {
+  Console_ShowTitle();
   printf("\t%s\n", name);
   printf("\t*********************************************\n\n");
 }
@@ -47,15 +44,11 @@ void Console_ShowFunction(String name)
 /**
  * Show Search result
  */
-void Console_ShowSearchResult(const Word word)
-{
-  if (word != NULL)
-  {
+void Console_ShowSearchResult(const Word word) {
+  if (word != NULL) {
     printf("\tTiếng Anh: %s\n", word->english);
     printf("\tTiếng Việt: %s\n\n", word->vietnamese);
-  }
-  else
-  {
+  } else {
     printf("\tTra từ không thành công. Không tìm thấy từ.\n\n");
   }
 }

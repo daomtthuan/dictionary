@@ -17,8 +17,7 @@ typedef Word Element;
  *
  * @return - Key of Element
  */
-String Element_GetKey(const Element element)
-{
+String Element_GetKey(const Element element) {
   return element->english;
 }
 

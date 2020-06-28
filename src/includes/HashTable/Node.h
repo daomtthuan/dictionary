@@ -6,8 +6,7 @@
 //--------------------------------------------------
 
 // Node Hash Table struct
-struct NodeHashTableStruct
-{
+struct NodeHashTableStruct {
   // Element
   Element data;
 
@@ -28,8 +27,7 @@ typedef struct NodeHashTableStruct *NodeHashTable;
  *
  * @return - New Node Hash table
  */
-NodeHashTable NodeHashTable_Create(const Element data, const NodeHashTable nextNode)
-{
+NodeHashTable NodeHashTable_Create(const Element data, const NodeHashTable nextNode) {
   NodeHashTable node = (NodeHashTable)malloc(sizeof(struct NodeHashTableStruct));
   node->data = data;
   node->next = nextNode;
@@ -41,8 +39,7 @@ NodeHashTable NodeHashTable_Create(const Element data, const NodeHashTable nextN
  *
  * @param node - Destroyed Node
  */
-void NodeHashTable_Destroy(NodeHashTable node)
-{
+void NodeHashTable_Destroy(NodeHashTable node) {
   Word_Destroy(node->data);
   free(node);
 }

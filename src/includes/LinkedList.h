@@ -6,8 +6,7 @@
 //--------------------------------------------------
 
 // Linked list struct
-struct LinkedListStruct
-{
+struct LinkedListStruct {
   // Header cursor node
   NodeLinkedList head;
 
@@ -25,8 +24,7 @@ typedef struct LinkedListStruct *LinkedList;
  *
  * @return - New Linked list
  */
-LinkedList LinkedList_Create()
-{
+LinkedList LinkedList_Create() {
   LinkedList list = (LinkedList)malloc(sizeof(struct LinkedListStruct));
   list->head = NULL;
   list->tail = NULL;
@@ -38,10 +36,8 @@ LinkedList LinkedList_Create()
  *
  * @param list - Destroyed Linked list
  */
-void LinkedList_Destroy(LinkedList list)
-{
-  while (list->head != NULL)
-  {
+void LinkedList_Destroy(LinkedList list) {
+  while (list->head != NULL) {
     NodeLinkedList node = list->head;
     list->head = list->head->next;
     NodeLinkedList_Destroy(node);
@@ -56,16 +52,12 @@ void LinkedList_Destroy(LinkedList list)
  *
  * @param element - Data
  */
-void LinkedList_Insert(LinkedList list, Word data)
-{
+void LinkedList_Insert(LinkedList list, Word data) {
   NodeLinkedList node = NodeLinkedList_Create(data);
-  if (list->head == NULL)
-  {
+  if (list->head == NULL) {
     list->head = node;
     list->tail = node;
-  }
-  else
-  {
+  } else {
     node->next = list->head;
     list->head->previous = node;
     list->head = node;

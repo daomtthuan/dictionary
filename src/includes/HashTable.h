@@ -1,12 +1,10 @@
 #ifndef _HASHTABLE_INCLUDE_
 #define _HASHTABLE_INCLUDE_
 
+#include "./Config.h"
 #include "./HashTable/Solution.h"
 
 //--------------------------------------------------
-
-// Length of Hash Table
-#define LENGTH_HASHTABLE 100
 
 // Hash Table type
 typedef NodeHashTable *HashTable;
@@ -18,12 +16,10 @@ typedef NodeHashTable *HashTable;
  *
  * @return - New Hash Table with null Nodes bucket
  */
-HashTable HashTable_Create()
-{
+HashTable HashTable_Create() {
   HashTable hashtable = (HashTable)malloc(sizeof(NodeHashTable) * LENGTH_HASHTABLE);
   size_t index = 0;
-  while (index < LENGTH_HASHTABLE)
-  {
+  while (index < LENGTH_HASHTABLE) {
     hashtable[index] = NULL;
     index++;
   }
@@ -35,13 +31,10 @@ HashTable HashTable_Create()
  *
  * @param hashtable - Destroyed HastaTable
  */
-void HashTable_Destroy(HashTable hashtable)
-{
+void HashTable_Destroy(HashTable hashtable) {
   size_t index = 0;
-  while (index < LENGTH_HASHTABLE)
-  {
-    while (hashtable[index] != NULL)
-    {
+  while (index < LENGTH_HASHTABLE) {
+    while (hashtable[index] != NULL) {
       NodeHashTable node = hashtable[index]->next;
       NodeHashTable_Destroy(hashtable[index]);
       hashtable[index] = node;
@@ -61,17 +54,12 @@ void HashTable_Destroy(HashTable hashtable)
  *
  * @return Node in Hash Table
  */
-NodeHashTable HashTable_GetNode(const HashTable hashtable, const String key)
-{
+NodeHashTable HashTable_GetNode(const HashTable hashtable, const String key) {
   NodeHashTable node = hashtable[HashSolution_HashString(key, LENGTH_HASHTABLE)];
-  while (node != NULL)
-  {
-    if (String_IsEqualIgnoreCase(key, Element_GetKey(node->data)))
-    {
+  while (node != NULL) {
+    if (String_IsEqualIgnoreCase(key, Element_GetKey(node->data))) {
       return node;
-    }
-    else
-    {
+    } else {
       node = node->next;
     }
   }
@@ -86,8 +74,7 @@ NodeHashTable HashTable_GetNode(const HashTable hashtable, const String key)
  *
  * @return Bool result of success or not
  */
-bool HashTable_Insert(HashTable hashtable, const Element element)
-{
+bool HashTable_Insert(HashTable hashtable, const Element element) {
   size_t index = HashSolution_HashString(Element_GetKey(element), LENGTH_HASHTABLE);
   NodeHashTable currentNode = hashtable[index];
   hashtable[index] = NodeHashTable_Create(element, currentNode);
@@ -102,32 +89,23 @@ bool HashTable_Insert(HashTable hashtable, const Element element)
  *
  * @return Bool result of success or not
  */
-bool HashTable_Delete(HashTable hashtable, const String key)
-{
+bool HashTable_Delete(HashTable hashtable, const String key) {
   size_t index = HashSolution_HashString(key, LENGTH_HASHTABLE);
-  if (hashtable[index] != NULL)
-  {
+  if (hashtable[index] != NULL) {
     NodeHashTable currentNode = hashtable[index];
-    if (String_IsEqualIgnoreCase(key, Element_GetKey(currentNode->data)))
-    {
+    if (String_IsEqualIgnoreCase(key, Element_GetKey(currentNode->data))) {
       hashtable[index] = hashtable[index]->next;
       NodeHashTable_Destroy(currentNode);
       return true;
-    }
-    else
-    {
+    } else {
       bool deleted = false;
-      while (currentNode->next != NULL && !deleted)
-      {
-        if (String_IsEqualIgnoreCase(key, Element_GetKey(currentNode->next->data)))
-        {
+      while (currentNode->next != NULL && !deleted) {
+        if (String_IsEqualIgnoreCase(key, Element_GetKey(currentNode->next->data))) {
           NodeHashTable nextNode = currentNode->next;
           currentNode->next = nextNode->next;
           NodeHashTable_Destroy(nextNode);
           deleted = true;
-        }
-        else
-        {
+        } else {
           currentNode = currentNode->next;
         }
       }
@@ -146,16 +124,13 @@ bool HashTable_Delete(HashTable hashtable, const String key)
  * --- @param _element - Element in action
  * --- @param _index - Index element in action
  */
-void HashTable_ForEach(const HashTable hashtable, void (*action)(Element _element, size_t _index))
-{
+void HashTable_ForEach(const HashTable hashtable, void (*action)(Element _element, size_t _index)) {
   NodeHashTable node;
   size_t indexBucket = 0;
   size_t index = 0;
-  while (indexBucket < LENGTH_HASHTABLE)
-  {
+  while (indexBucket < LENGTH_HASHTABLE) {
     node = hashtable[indexBucket++];
-    while (node != NULL)
-    {
+    while (node != NULL) {
       action(node->data, index++);
       node = node->next;
     }

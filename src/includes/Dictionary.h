@@ -1,9 +1,9 @@
 #ifndef _DICTIONARY_INCLUDE_
 #define _DICTIONARY_INCLUDE_
 
-#include "./HashTable.h"
-#include "./Console.h"
 #include "./Config.h"
+#include "./Console.h"
+#include "./HashTable.h"
 
 //--------------------------------------------------
 
@@ -17,8 +17,7 @@ typedef HashTable Dictionary;
  *
  * @return New Dictionary
  */
-Dictionary Dictionary_Create()
-{
+Dictionary Dictionary_Create() {
   return HashTable_Create();
 }
 
@@ -27,8 +26,7 @@ Dictionary Dictionary_Create()
  *
  * @param dictionary Destroyed Dictionary
  */
-void Dictionary_Destroy(Dictionary dictionary)
-{
+void Dictionary_Destroy(Dictionary dictionary) {
   HashTable_Destroy(dictionary);
 }
 
@@ -40,8 +38,7 @@ void Dictionary_Destroy(Dictionary dictionary)
  * @param element - Each element
  * @param index - Index of each element
  */
-void Dictionary_WirteData(Element element, size_t index)
-{
+void Dictionary_WirteData(Element element, size_t index) {
   FILE *file = fopen(CONFIG_DATA_FILE, index == 0 ? "w" : "a");
   fputs(element->english, file);
   fputc('\n', file);
@@ -62,12 +59,9 @@ void Dictionary_WirteData(Element element, size_t index)
  *
  * @return Insert result success or not
  */
-bool Dictionary_Insert(Dictionary dictionary, const String english, const String vietnamese)
-{
-  if (HashTable_GetNode(dictionary, english) == NULL)
-  {
-    if (HashTable_Insert(dictionary, Word_Create(english, vietnamese)))
-    {
+bool Dictionary_Insert(Dictionary dictionary, const String english, const String vietnamese) {
+  if (HashTable_GetNode(dictionary, english) == NULL) {
+    if (HashTable_Insert(dictionary, Word_Create(english, vietnamese))) {
       HashTable_ForEach(dictionary, Dictionary_WirteData);
       return true;
     }
@@ -84,12 +78,9 @@ bool Dictionary_Insert(Dictionary dictionary, const String english, const String
  *
  * @return Delete result success or not
  */
-bool Dictionary_Delete(Dictionary dictionary, const String english)
-{
-  if (HashTable_GetNode(dictionary, english) != NULL)
-  {
-    if (HashTable_Delete(dictionary, english))
-    {
+bool Dictionary_Delete(Dictionary dictionary, const String english) {
+  if (HashTable_GetNode(dictionary, english) != NULL) {
+    if (HashTable_Delete(dictionary, english)) {
       HashTable_ForEach(dictionary, Dictionary_WirteData);
       return true;
     }
@@ -99,25 +90,38 @@ bool Dictionary_Delete(Dictionary dictionary, const String english)
 }
 
 /**
+ * Save Word into data file
+ *
+ * @param dictionary - Dictionary
+ */
+void Dictionary_SaveData(Dictionary dictionary) {
+  FILE *file = fopen(CONFIG_DATA_FILE, "w");
+  // fputs(element->english, file);
+  // fputc('\n', file);
+
+  // fputs(element->vietnamese, file);
+  // fputc('\n', file);
+
+  fclose(file);
+  file = NULL;
+}
+
+/**
  * Load Word from data file
  *
  * @param dictionary - Dictionary
  */
-void Dictionary_LoadData(Dictionary dictionary)
-{
-  FILE *file = fopen(CONFIG_DATA_FILE, "r+");
+void Dictionary_LoadData(Dictionary dictionary) {
+  FILE *file = fopen(CONFIG_DATA_FILE, "r");
 
   char cursor = fgetc(file);
-  while (cursor != EOF)
-  {
+  while (cursor != EOF) {
     int line = 0;
     String english = String_CreateEmpty();
     String vietnamese = String_CreateEmpty();
 
-    while (line++ < 2)
-    {
-      while (cursor != '\n')
-      {
+    while (line++ < 2) {
+      while (cursor != '\n') {
         String_Push(line == 1 ? &english : &vietnamese, cursor);
         cursor = fgetc(file);
       }
@@ -140,15 +144,11 @@ void Dictionary_LoadData(Dictionary dictionary)
  *
  * @return Search result found Word or NULL if not found
  */
-Word Dictionary_Search(Dictionary dictionary, const String english)
-{
+Word Dictionary_Search(Dictionary dictionary, const String english) {
   NodeHashTable node = HashTable_GetNode(dictionary, english);
-  if (node == NULL)
-  {
+  if (node == NULL) {
     return NULL;
-  }
-  else
-  {
+  } else {
     return node->data;
   }
 }

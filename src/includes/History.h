@@ -18,8 +18,7 @@ typedef NodeLinkedList CursorHistory;
  *
  * @return New History
  */
-History History_Create()
-{
+History History_Create() {
   return LinkedList_Create();
 }
 
@@ -28,8 +27,7 @@ History History_Create()
  *
  * @param history Destroyed History
  */
-void History_Destroy(History history)
-{
+void History_Destroy(History history) {
   LinkedList_Destroy(history);
 }
 
@@ -42,8 +40,7 @@ void History_Destroy(History history)
  * @param english English word
  * @param vietnamese Vietnamese meaning
  */
-void History_Insert(History history, String english, String vietnamese)
-{
+void History_Insert(History history, String english, String vietnamese) {
   LinkedList_Insert(history, Word_Create(english, vietnamese));
 }
 
@@ -56,8 +53,7 @@ void History_Insert(History history, String english, String vietnamese)
  *
  * @return Word at cursor history
  */
-Word History_GetData(CursorHistory cursor)
-{
+Word History_GetData(CursorHistory cursor) {
   return cursor->data;
 }
 
@@ -68,8 +64,7 @@ Word History_GetData(CursorHistory cursor)
  *
  * @return Cursor History
  */
-CursorHistory History_GetCursor(History history)
-{
+CursorHistory History_GetCursor(History history) {
   return history->head;
 }
 
@@ -80,8 +75,7 @@ CursorHistory History_GetCursor(History history)
  *
  * @return The next at Cursor History
  */
-CursorHistory History_Next(CursorHistory cursor)
-{
+CursorHistory History_Next(CursorHistory cursor) {
   return cursor->next;
 }
 
@@ -92,8 +86,7 @@ CursorHistory History_Next(CursorHistory cursor)
  *
  * @return The previous at Cursor History
  */
-CursorHistory History_Previous(CursorHistory cursor)
-{
+CursorHistory History_Previous(CursorHistory cursor) {
   return cursor->previous;
 }
 

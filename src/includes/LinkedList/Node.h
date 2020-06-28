@@ -6,8 +6,7 @@
 //--------------------------------------------------
 
 // Node Linked list struct
-struct NodeLinkedListStruct
-{
+struct NodeLinkedListStruct {
   // Element
   Word data;
 
@@ -30,8 +29,7 @@ typedef struct NodeLinkedListStruct *NodeLinkedList;
  *
  * @return - New Node Linked list
  */
-NodeLinkedList NodeLinkedList_Create(Word data)
-{
+NodeLinkedList NodeLinkedList_Create(Word data) {
   NodeLinkedList node = (NodeLinkedList)malloc(sizeof(struct NodeLinkedListStruct));
   node->data = data;
   node->next = NULL;
@@ -44,8 +42,7 @@ NodeLinkedList NodeLinkedList_Create(Word data)
  *
  * @param node - Destroyed node
  */
-void NodeLinkedList_Destroy(NodeLinkedList node)
-{
+void NodeLinkedList_Destroy(NodeLinkedList node) {
   Word_Destroy(node->data);
   free(node);
 }
