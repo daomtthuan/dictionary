@@ -33,17 +33,17 @@ void Dictionary_Destroy(Dictionary dictionary) {
 //--------------------------------------------------
 
 /**
- * Write data element in data file
+ * Write word data in data file
  *
- * @param element - Each element
- * @param index - Index of each element
+ * @param word - Each word
+ * @param index - Index of each word
  */
-void Dictionary_WirteData(Element element, size_t index) {
+void Dictionary_WirteData(Word word, size_t index) {
   FILE *file = fopen(CONFIG_DATA_FILE, index == 0 ? "w" : "a");
-  fputs(element->english, file);
+  fputs(word->english, file);
   fputc('\n', file);
 
-  fputs(element->vietnamese, file);
+  fputs(word->vietnamese, file);
   fputc('\n', file);
 
   fclose(file);
@@ -96,10 +96,10 @@ bool Dictionary_Delete(Dictionary dictionary, const String english) {
  */
 void Dictionary_SaveData(Dictionary dictionary) {
   FILE *file = fopen(CONFIG_DATA_FILE, "w");
-  // fputs(element->english, file);
+  // fputs(word->english, file);
   // fputc('\n', file);
 
-  // fputs(element->vietnamese, file);
+  // fputs(word->vietnamese, file);
   // fputc('\n', file);
 
   fclose(file);
@@ -114,26 +114,30 @@ void Dictionary_SaveData(Dictionary dictionary) {
 void Dictionary_LoadData(Dictionary dictionary) {
   FILE *file = fopen(CONFIG_DATA_FILE, "r");
 
-  char cursor = fgetc(file);
-  while (cursor != EOF) {
-    int line = 0;
-    String english = String_CreateEmpty();
-    String vietnamese = String_CreateEmpty();
+  if (file != NULL) {
+    char cursor = fgetc(file);
+    while (cursor != EOF) {
+      int line = 0;
+      String english = String_CreateEmpty();
+      String vietnamese = String_CreateEmpty();
 
-    while (line++ < 2) {
-      while (cursor != '\n') {
-        String_Push(line == 1 ? &english : &vietnamese, cursor);
+      while (line++ < 2) {
+        while (cursor != '\n') {
+          String_Push(line == 1 ? &english : &vietnamese, cursor);
+          cursor = fgetc(file);
+        }
+
         cursor = fgetc(file);
       }
 
-      cursor = fgetc(file);
+      HashTable_Insert(dictionary, Word_Create(english, vietnamese));
+      String_Destroy(english);
+      String_Destroy(vietnamese);
     }
 
-    HashTable_Insert(dictionary, Word_Create(english, vietnamese));
-    String_Destroy(english);
-    String_Destroy(vietnamese);
+    fclose(file);
+    file = NULL;
   }
-  fclose(file);
 }
 
 /**

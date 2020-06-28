@@ -116,22 +116,22 @@ bool HashTable_Delete(HashTable hashtable, const String key) {
 }
 
 /**
- * For each Element with do action
+ * For each Element with do callback action
  *
  * @param hashtable - Hash Table
- * @param action - Action do with each Element - Function with 2 args is element and index of element
+ * @param callback - Action do with each Element - Function with 2 args is element and index of element
  *
- * --- @param _element - Element in action
- * --- @param _index - Index element in action
+ * --- @param _element - Element in callback
+ * --- @param _index - Index element in callback
  */
-void HashTable_ForEach(const HashTable hashtable, void (*action)(Element _element, size_t _index)) {
+void HashTable_ForEach(const HashTable hashtable, void (*callback)(Element _element, size_t _index)) {
   NodeHashTable node;
   size_t indexBucket = 0;
   size_t index = 0;
   while (indexBucket < LENGTH_HASHTABLE) {
     node = hashtable[indexBucket++];
     while (node != NULL) {
-      action(node->data, index++);
+      callback(node->data, index++);
       node = node->next;
     }
   }
