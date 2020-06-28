@@ -3,106 +3,166 @@
 #include "./includes/Dictionary.h"
 #include "./includes/History.h"
 
+/**
+ * Main Program
+ */
 int main() {
-  bool loop = true;
+  Console_ShowTitle();
+  Console_ShowText("Đang khởi tạo...");
+
+  char cursor;
+  bool selectFunction = true;
+  bool changed = false;
+  bool inHistoryFunction = false;
+  bool selectExitOption = false;
   Dictionary dictionary = Dictionary_Create();
   History history = History_Create();
-  char cursor;
 
+  Console_ShowText("Đang nạp dữ liệu...");
   Dictionary_LoadData(dictionary);
-  while (loop) {
-    bool loopHistory;
-    Console_ShowTitle();
-    Console_ShowMenu();
 
+  Console_ShowMenu();
+
+  while (selectFunction) {
     switch (getch()) {
-      case '0':
-        loop = false;
-        Console_ShowTitle();
-        printf("\tTạm biệt!");
-        getch();
-        break;
-
       case '1':
         do {
           Console_ShowFunction("TRA CỨU TỪ");
-          printf("\tNhập từ tiếng Anh muốn tra cứu: ");
+          Console_Input("Nhập từ tiếng Anh muốn tra cứu");
           String english = String_Input();
 
           Console_ShowFunction("TRA CỨU TỪ");
-          Word result = Dictionary_Search(dictionary, english);
-          Console_ShowSearchResult(result);
-          History_Insert(history, english, result == NULL ? "" : result->vietnamese);
+          if (strlen(english) > 0) {
+            Word result = Dictionary_Search(dictionary, english);
+            Console_ShowSearchResult(result);
+            History_Insert(history, english, result == NULL ? "" : result->vietnamese);
+          } else {
 
+            Console_ShowText("Tra cứu từ không thành công.");
+            Console_ShowText("Từ tiếng Anh không được để trống.");
+          }
+          
           String_Destroy(english);
 
-          printf("\tNhấn phím Enter để tiếp tục chức năng Tra cứu từ.\n\tNhấn phím khác để trở về màn hình danh sách chức năng.");
+          Console_BreakLine();
+          Console_ShowText("Nhấn phím Enter để tiếp tục chức năng Tra cứu từ.");
+          Console_ShowText("Nhấn phím khác để trở về màn hình danh sách chức năng.");
         } while (getch() == 13);
+
+        Console_ShowMenu();
         break;
 
       case '2':
         do {
-          Console_ShowFunction("THÊM TỪ MỚI");
+          Console_ShowFunction("THÊM TỪ");
 
-          printf("\n\tNhập từ mới tiếng Anh: ");
+          Console_Input("Nhập từ tiếng Anh");
           String english = String_Input();
 
-          printf("\tNhập nghĩa tiếng Việt: ");
+          Console_Input("Nhập nghĩa tiếng Việt");
           String vietnamese = String_Input();
 
-          Console_ShowFunction("THÊM TỪ MỚI");
+          Console_ShowFunction("THÊM TỪ");
           if (strlen(english) * strlen(vietnamese) > 0) {
             if (Dictionary_Insert(dictionary, english, vietnamese)) {
-              printf("\n\tThêm từ mới thành công.\n\n");
+              changed = true;
+              Console_ShowText("Thêm từ thành công.");
             } else {
-              printf("\n\tThêm từ mới không thành công. Từ này đã có trong tự điển.\n\n");
+              Console_ShowText("Thêm từ không thành công.");
+              Console_ShowText("Từ này đã có trong tự điển.");
             }
           } else {
-            printf("\n\tThêm từ mới không thành công. Từ tiếng Anh và nghĩa tiếng Việt không được để trống.\n\n");
+            Console_ShowText("Thêm từ không thành công.");
+            Console_ShowText("Từ tiếng Anh và nghĩa tiếng Việt không được để trống.");
           }
 
           String_Destroy(english);
           String_Destroy(vietnamese);
 
-          printf("\tNhấn phím Enter để tiếp tục chức năng Thêm từ mới.\n\tNhấn phím khác để trở về màn hình danh sách chức năng.");
+          Console_BreakLine();
+          Console_ShowText("Nhấn phím Enter để tiếp tục chức năng Thêm từ.");
+          Console_ShowText("Nhấn phím khác để trở về màn hình danh sách chức năng.");
         } while (getch() == 13);
+
+        Console_ShowMenu();
         break;
 
       case '3':
         do {
+          Console_ShowFunction("SỬA TỪ");
+
+          Console_Input("Nhập từ tiếng Anh");
+          String english = String_Input();
+
+          Console_Input("Nhập nghĩa tiếng Việt");
+          String vietnamese = String_Input();
+
+          Console_ShowFunction("SỬA TỪ");
+          if (strlen(english) * strlen(vietnamese) > 0) {
+            if (Dictionary_Edit(dictionary, english, vietnamese)) {
+              changed = true;
+              Console_ShowText("Sửa từ thành công.");
+            } else {
+              Console_ShowText("Sửa từ không thành công.");
+              Console_ShowText("Từ này không có trong tự điển.");
+            }
+          } else {
+            Console_ShowText("Sửa từ không thành công.");
+            Console_ShowText("Từ tiếng Anh và nghĩa tiếng Việt không được để trống.");
+          }
+
+          String_Destroy(english);
+          String_Destroy(vietnamese);
+
+          Console_BreakLine();
+          Console_ShowText("Nhấn phím Enter để tiếp tục chức năng Sửa từ.");
+          Console_ShowText("Nhấn phím khác để trở về màn hình danh sách chức năng.");
+        } while (getch() == 13);
+
+        Console_ShowMenu();
+        break;
+
+      case '4':
+        do {
           Console_ShowFunction("XOÁ TỪ");
 
-          printf("\n\tNhập từ tiếng Anh cần xoá: ");
+          Console_Input("Nhập từ tiếng Anh cần xoá");
           String english = String_Input();
 
           Console_ShowFunction("XOÁ TỪ");
           if (strlen(english) > 0) {
             if (Dictionary_Delete(dictionary, english)) {
-              printf("\n\tXoá từ thành công.\n\n");
+              changed = true;
+              Console_ShowText("Xoá từ thành công.");
             } else {
-              printf("\n\tXoá từ không thành công. Từ này không có trong tự điển.\n\n");
+              Console_ShowText("Xoá từ không thành công.");
+              Console_ShowText("Từ này không có trong tự điển.");
             }
           } else {
-            printf("\n\tXoá từ không thành công. Vui lòng nhập từ tiếng Anh cần xoá.\n\n");
+            Console_ShowText("Xoá từ không thành công.");
+            Console_ShowText("Từ tiếng Anh không được để trống.");
           }
 
           String_Destroy(english);
 
-          printf("\tNhấn phím Enter để tiếp tục chức năng Xoá từ.\n\tNhấn phím khác để trở về màn hình danh sách chức năng.");
+          Console_BreakLine();
+          Console_ShowText("Nhấn phím Enter để tiếp tục chức năng Xoá từ.");
+          Console_ShowText("Nhấn phím khác để trở về màn hình danh sách chức năng.");
         } while (getch() == 13);
+
+        Console_ShowMenu();
         break;
 
-      case '4':
-        loopHistory = true;
+      case '5':
+        inHistoryFunction = true;
         CursorHistory cursor = History_GetCursor(history);
-        while (loopHistory) {
-          Console_ShowTitle();
-          printf("\tLỊCH SỬ TRA CỨU TỪ\n");
-          printf("\t*********************************************\n\n");
+        while (inHistoryFunction) {
+          Console_ShowFunction("LỊCH SỬ TRA CỨU TỪ");
 
           if (cursor != NULL) {
             Console_ShowSearchResult(History_GetData(cursor));
-            printf("\tDùng 2 phím mũi tên cuộn lên và xuống để xem lịch sử.\n\tNhấn phím khác để trở về màn hình danh sách chức năng.");
+            Console_ShowText("Dùng 2 phím mũi tên cuộn lên và xuống để xem lịch sử.");
+            Console_ShowText("Nhấn phím khác để trở về màn hình danh sách chức năng.");
 
             switch (getch()) {
               case 224:
@@ -122,21 +182,60 @@ int main() {
                 break;
 
               default:
-                loopHistory = false;
+                inHistoryFunction = false;
                 break;
             }
           } else {
-            printf("\tLịch sử trống\n\n");
-            printf("\tNhấn phím bất kì để trở về màn hình danh sách chức năng.");
+            inHistoryFunction = false;
+            Console_ShowText("Lịch sử trống.");
+            Console_BreakLine();
+            Console_ShowText("Nhấn phím bất kỳ để trở về màn hình danh sách chức năng.");
             getch();
-            loopHistory = false;
           }
+        }
+
+        Console_ShowMenu();
+        break;
+
+      case '0':
+        if (changed) {
+          Console_ShowExitMenu();
+          selectExitOption = true;
+          while (selectExitOption) {
+            switch (getch()) {
+              case '1':
+                Console_ShowTitle();
+                Console_ShowText("Đang lưu dữ liệu...");
+                Dictionary_SaveData(dictionary);
+
+                selectFunction = false;
+                selectExitOption = false;
+                break;
+
+              case '2':
+                selectExitOption = false;
+                Console_ShowMenu();
+                break;
+
+              case '0':
+                selectFunction = false;
+                selectExitOption = false;
+                break;
+            }
+          }
+        } else {
+          selectFunction = false;
         }
         break;
     }
   }
 
+  Console_ShowTitle();
+  Console_ShowText("Đang thu gom, dọn dẹp dữ liệu...");
   History_Destroy(history);
   Dictionary_Destroy(dictionary);
+
+  Console_ShowTitle();
+  Console_ShowText("Tạm biệt.");
   return 0;
 }

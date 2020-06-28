@@ -8,6 +8,8 @@ fame
 tiếng tăm
 hide
 trốn
+far
+xa
 cheek
 gò má
 job
@@ -15,7 +17,7 @@ công việc
 make
 chế tạo
 no
-khng
+không
 camera
 máy ảnh
 edit
@@ -46,6 +48,8 @@ hope
 hy vọng
 react
 phản ứng
+fun
+vui
 erase
 xoá bỏ
 kite

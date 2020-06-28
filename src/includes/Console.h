@@ -10,46 +10,93 @@
  */
 void Console_ShowTitle() {
   system("cls");
-  printf("\n\t*********************************************\n");
-  printf("\t*                                           *\n");
-  printf("\t*      CHƯƠNG TRÌNH TỰ ĐIỂN ANH - VIỆT      *\n");
-  printf("\t*                                           *\n");
-  printf("\t*      Họ và tên: Đào Minh Trung Thuận      *\n");
-  printf("\t*      Mã sinh viên: B1704855               *\n");
-  printf("\t*                                           *\n");
-  printf("\t*********************************************\n\n");
+  printf("\n  *********************************************\n");
+  printf("  *                                           *\n");
+  printf("  *      CHƯƠNG TRÌNH TỰ ĐIỂN ANH - VIỆT      *\n");
+  printf("  *                                           *\n");
+  printf("  *      Họ và tên: Đào Minh Trung Thuận      *\n");
+  printf("  *      Mã sinh viên: B1704855               *\n");
+  printf("  *                                           *\n");
+  printf("  *********************************************\n\n");
 }
 
 /**
- * Show Menu
+ * Show text
+ *
+ * @param text - Shown text
+ */
+void Console_ShowText(String text) {
+  printf("  %s\n", text);
+}
+
+/**
+ * Show text for input
+ *
+ * @param text - Shown text
+ */
+void Console_Input(String text) {
+  printf("  %s: ", text);
+}
+
+/**
+ * Break line
+ *
+ */
+void Console_BreakLine() {
+  printf("\n");
+}
+
+/**
+ * Show main Menu
+ *
  */
 void Console_ShowMenu() {
-  printf("\tDanh sách chức năng:\n");
-  printf("\t\t0. Lưu dữ liệu và thoát chương trình.\n");
-  printf("\t\t1. Tra cứu từ.\n");
-  printf("\t\t2. Thêm từ mới.\n");
-  printf("\t\t3. Xoá từ.\n");
-  printf("\t\t4. Lịch sử tra cứu.");
+  Console_ShowTitle();
+  printf("  Danh sách chức năng:\n");
+  printf("    1. Tra cứu từ.\n");
+  printf("    2. Thêm từ.\n");
+  printf("    3. Sửa từ.\n");
+  printf("    4. Xoá từ.\n");
+  printf("    5. Lịch sử tra cứu.\n");
+  printf("    ----------------------\n");
+  printf("    0. Thoát chương trình.\n");
+}
+
+/**
+ * Show exit Menu
+ *
+ */
+void Console_ShowExitMenu() {
+  Console_ShowTitle();
+  printf("  Dữ liệu từ điển có sự thay đổi, lưu dữ liệu trước khi thoát?\n");
+  printf("    1. Lưu dữ liệu.\n");
+  printf("    2. Trở về màn hình danh sách chức năng.\n");
+  printf("    ---------------------------------------\n");
+  printf("    0. Không lưu dữ liệu.\n");
 }
 
 /**
  * Show name Function
+ *
+ * @param name - Name of function
  */
 void Console_ShowFunction(String name) {
   Console_ShowTitle();
-  printf("\t%s\n", name);
-  printf("\t*********************************************\n\n");
+  printf("  %s\n", name);
+  printf("  *********************************************\n\n");
 }
 
 /**
  * Show Search result
+ *
+ * @param word - Result word
  */
 void Console_ShowSearchResult(const Word word) {
   if (word != NULL) {
-    printf("\tTiếng Anh: %s\n", word->english);
-    printf("\tTiếng Việt: %s\n\n", word->vietnamese);
+    printf("  Tiếng Anh: %s\n", word->english);
+    printf("  Tiếng Việt: %s\n", word->vietnamese);
   } else {
-    printf("\tTra từ không thành công. Không tìm thấy từ.\n\n");
+    printf("  Tra từ không thành công.\n  Không tìm thấy từ.\n");
   }
 }
 

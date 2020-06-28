@@ -40,6 +40,7 @@ void Dictionary_Destroy(Dictionary dictionary) {
  */
 void Dictionary_WirteData(Word word, size_t index) {
   FILE *file = fopen(CONFIG_DATA_FILE, index == 0 ? "w" : "a");
+
   fputs(word->english, file);
   fputc('\n', file);
 
@@ -61,10 +62,25 @@ void Dictionary_WirteData(Word word, size_t index) {
  */
 bool Dictionary_Insert(Dictionary dictionary, const String english, const String vietnamese) {
   if (HashTable_GetNode(dictionary, english) == NULL) {
-    if (HashTable_Insert(dictionary, Word_Create(english, vietnamese))) {
-      HashTable_ForEach(dictionary, Dictionary_WirteData);
-      return true;
-    }
+    return HashTable_Insert(dictionary, Word_Create(english, vietnamese));
+  }
+
+  return false;
+}
+
+/**
+ * Edit Word
+ *
+ * @param dictionary - Dictionary
+ * @param english - English meaning of edited Word
+ * @param vietnamese - Vietnamese meaning of edited Word
+ *
+ * @return Edit result success or not
+ */
+bool Dictionary_Edit(Dictionary dictionary, const String english, const String vietnamese) {
+  if (HashTable_GetNode(dictionary, english) != NULL) {
+    HashTable_Delete(dictionary, english);
+    return HashTable_Insert(dictionary, Word_Create(english, vietnamese));
   }
 
   return false;
@@ -74,16 +90,13 @@ bool Dictionary_Insert(Dictionary dictionary, const String english, const String
  * Delete Word
  *
  * @param dictionary - Dictionary
- * @param english - English meaning of Word
+ * @param english - English meaning of deleted Word
  *
  * @return Delete result success or not
  */
 bool Dictionary_Delete(Dictionary dictionary, const String english) {
   if (HashTable_GetNode(dictionary, english) != NULL) {
-    if (HashTable_Delete(dictionary, english)) {
-      HashTable_ForEach(dictionary, Dictionary_WirteData);
-      return true;
-    }
+    return HashTable_Delete(dictionary, english);
   }
 
   return false;
@@ -95,15 +108,7 @@ bool Dictionary_Delete(Dictionary dictionary, const String english) {
  * @param dictionary - Dictionary
  */
 void Dictionary_SaveData(Dictionary dictionary) {
-  FILE *file = fopen(CONFIG_DATA_FILE, "w");
-  // fputs(word->english, file);
-  // fputc('\n', file);
-
-  // fputs(word->vietnamese, file);
-  // fputc('\n', file);
-
-  fclose(file);
-  file = NULL;
+  HashTable_ForEach(dictionary, Dictionary_WirteData);
 }
 
 /**
